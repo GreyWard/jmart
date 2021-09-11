@@ -21,7 +21,7 @@ public class Jmart
     public static float getDiscountPercentage(int before, int after){
         float disc;
         if (before >= after){
-        disc = (before - after/before);
+        disc = ((float)(before - after)/before);
         }
         else{
             disc = 0;
