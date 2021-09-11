@@ -10,7 +10,6 @@ package MichaelHardityaJmartFA;
 public class Jmart
 {
     public static void main(String[] args){
-        System.out.println(getDiscountPercentage(1000,900));
     }
     public static int getPromo(){
         return 0;
