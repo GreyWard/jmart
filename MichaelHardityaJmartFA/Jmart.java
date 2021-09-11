@@ -13,8 +13,19 @@ public class Jmart
     }
 
     public int getPromo(){
-        // put your code here
         return 0;
     }
-
+    public String getCustomer(){
+        return "oop";
+    }
+    public float getDiscountPercentage(int before, int after){
+        float disc;
+        if (before >= after){
+        disc = (before - after/100);
+        }
+        else{
+            disc = 0;
+        }
+        return disc;
+    }
 }
