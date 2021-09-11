@@ -10,6 +10,7 @@ package MichaelHardityaJmartFA;
 public class Jmart
 {
     public static void main(String[] args){
+        
     }
     public static int getPromo(){
         return 0;
@@ -20,7 +21,7 @@ public class Jmart
     public static float getDiscountPercentage(int before, int after){
         float disc;
         if (before >= after){
-        disc = ((float)(before - after)/before);
+        disc = ((float)(before - after)/before)*100;
         }
         else{
             disc = 0;
@@ -29,17 +30,17 @@ public class Jmart
     }
     public static int getDiscountedPrice(int price, float discountPercentage){
         if (discountPercentage < 100 && discountPercentage > 0){
-            price -= (price * discountPercentage);
-	}
-	else{
-	    price = 0;
+            price -= (price * discountPercentage/100);
+    }
+    else{
+        price = 0;
         }
-	return price;
+    return price;
     }
     public static int getOriginalPrice(int discountedPrice, float discountPercentage){
         int price;
-        discountPercentage = 100 - discountPercentage;
-        price = discountedPrice + (int)(discountedPrice/discountPercentage);
+        float check = (100 - discountPercentage);
+        price = discountedPrice + (int)(discountedPrice/check*discountPercentage);
         return price;
     }
     public static float getCommissionMultiplier(){
