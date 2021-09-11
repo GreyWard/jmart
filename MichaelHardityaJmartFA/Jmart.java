@@ -43,4 +43,13 @@ public class Jmart
         price = discountedPrice + (int)(discountedPrice/discountPercentage);
         return price;
     }
+    public float getCommissionMultiplier(){
+        return 0.05f;
+    }
+    public int getAdjustedPrice(int price){
+        return price + (int)(price * getCommissionMultiplier());
+    }
+    public int getAdminFee(int price){
+        return (int)(price * getCommissionMultiplier());
+    }
 }
