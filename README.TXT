@@ -4,9 +4,9 @@ Tell the reader (someone who does not know anything about this project)
 all they need to know. The comments should usually include at least:
 ------------------------------------------------------------------------
 
-PROJECT TITLE:
-PURPOSE OF PROJECT:
-VERSION or DATE:
-HOW TO START THIS PROJECT:
-AUTHORS:
-USER INSTRUCTIONS:
+PROJECT TITLE: JMart
+PURPOSE OF PROJECT: Program to count and manage prices, commision fees, and discounts.
+VERSION or DATE: 0.0.1
+HOW TO START THIS PROJECT: Still on progress
+AUTHORS: Michael Harditya
+USER INSTRUCTIONS: Wait until released
