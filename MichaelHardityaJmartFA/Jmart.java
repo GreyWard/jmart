@@ -10,6 +10,7 @@ package MichaelHardityaJmartFA;
 public class Jmart
 {
     public static void main(String[] args){
+        System.out.println(getDiscountPercentage(1000,900));
     }
     public static int getPromo(){
         return 0;
@@ -20,7 +21,7 @@ public class Jmart
     public static float getDiscountPercentage(int before, int after){
         float disc;
         if (before >= after){
-        disc = (before - after/100);
+        disc = (before - after/before);
         }
         else{
             disc = 0;
