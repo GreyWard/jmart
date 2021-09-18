@@ -22,22 +22,22 @@ public class PriceTag
         return (getDiscountedPrice()+getAdminFee());
     }
     public double getAdminFee(){
-        if (getDiscountedPrice()<this.BOTTOM_PRICE){
-            return this.BOTTOM_FEE;
+        if (getDiscountedPrice()<BOTTOM_PRICE){
+            return BOTTOM_FEE;
         }
         else{
-            return (getDiscountedPrice()-getDiscountedPrice()*this.COMMISSION_MULTIPLIER);
+            return (getDiscountedPrice()*COMMISSION_MULTIPLIER);
         }
     }
     public double getDiscountedPrice(){
-        if (this.discount > 100.0){
+        if (discount > 100.0){
             return 0.0;
         }
-        else if (this.discount == 100.0){
-            return this.price;
+        else if (discount == 100.0){
+            return price;
         }
         else{
-            return (this.price / 100 * (100 - this.discount));
+            return (price / 100 * (100 - discount));
         }
     }
 }
