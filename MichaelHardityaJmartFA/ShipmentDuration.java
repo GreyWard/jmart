@@ -1,22 +1,20 @@
 package MichaelHardityaJmartFA;
 
-public class ShipmentDuration{
-    public static byte INSTANT = 1;
-    public static byte SAME_DAY = 2;
-    public static byte NEXT_DAY = 4;
-    public static byte REGULER = 8;
-    public static byte KARGO = 16;
+
+public class ShipmentDuration
+{
+    public static final int INSTANT = 0 << 1;
+    public static final int SAME_DAY = 1 << 1;
+    public static final int NEXT_DAY = 2 << 1;
+    public static final int REGULER = 3 << 1;
+    public static final int KARGO = 4 << 1;
     private int bit;
     private ShipmentDuration(int bit){
         this.bit = bit;
     }
-
-    public ShipmentDuration(ShipmentDuration... args){
-        bit = KARGO ^ SAME_DAY ^ NEXT_DAY ^ REGULER ^ KARGO;
-    }
-    public int isDuration(ShipmentDuration reference)
+    public ShipmentDuration(ShipmentDuration... args)
     {
-        //failed
-        return 0;
+        
     }
+    
 }

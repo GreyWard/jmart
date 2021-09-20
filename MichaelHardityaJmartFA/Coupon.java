@@ -1,12 +1,5 @@
 package MichaelHardityaJmartFA;
 
-
-/**
- * Write a description of class Coupon here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
 public class Coupon
 {
     static public String name;
@@ -15,6 +8,7 @@ public class Coupon
     static public Type type;
     static public double minimum;
     private boolean used;
+    enum Type {DISCOUNT,REBATE}
     public Coupon(String name, int code, Type type, double cut, double minimum)
     {
         this.name = name;
