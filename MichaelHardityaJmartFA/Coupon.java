@@ -2,13 +2,13 @@ package MichaelHardityaJmartFA;
 
 public class Coupon
 {
-    static public String name;
-    static public int code;
-    static public double cut;
-    static public Type type;
-    static public double minimum;
+    public static enum Type{DISCOUNT,REBATE};
+    public static String name;
+    public static int code;
+    public static double cut;
+    public static Type type;
+    public static double minimum;
     private boolean used;
-    enum Type {DISCOUNT,REBATE}
     public Coupon(String name, int code, Type type, double cut, double minimum)
     {
         this.name = name;
@@ -32,6 +32,11 @@ public class Coupon
     }
     public double apply(PriceTag pricetag){
         this.used = true;
+        if (this.type == Coupon.Type.DISCOUNT){
+            return (pricetag.getAdjustedPrice()*(100-this.cut)/100);
+        }
+        else{
         return (pricetag.getAdjustedPrice()-this.cut);
+    }
     }
 }
