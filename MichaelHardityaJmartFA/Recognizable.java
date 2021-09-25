@@ -14,7 +14,8 @@ public class Recognizable
     {
          return (test instanceof Recognizable && this.id == ((Recognizable) test).id);   
     }
-    public boolean equals(Recognizable test){
+    public boolean equals(Recognizable test)
+    {
             return (this.id == test.id);
     }
 }
