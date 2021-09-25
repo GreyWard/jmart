@@ -19,9 +19,9 @@ public abstract class Transaction extends Recognizable
 
     protected Transaction(int id, Account buyer, Store store)
     {
-        super(buyer.id);
-        this.buyerId = buyerId;
-       this.storeId = storeId;
+        super(id);
+        this.buyerId = buyer.id;
+       this.storeId = store.id;
        this.time = "TIME";
        this.rating = Rating.NONE;
     }
