@@ -4,9 +4,6 @@ comment0.text=\r\n\ a\ JMart\ Apps\ for\ managing\ a\ store\r\n\r\n\ @author\ Mi
 comment1.params=args
 comment1.target=void\ main(java.lang.String[])
 comment2.params=
-comment2.target=Product\ createProduct()
-comment3.params=
-comment3.target=Coupon\ createCoupun()
-comment4.params=
-comment4.target=ShipmentDuration\ createShipmentDuration()
-numComments=5
+comment2.target=ShipmentDuration\ createShipmentDuration()
+comment2.text=public\ static\ Product\ createProduct(){\r\n\ \ \ \ \ \ \ \ PriceTag\ price\ \=\ new\ PriceTag(10000,5);\r\n\ \ \ \ \ \ \ \ Product\ testcase\ \=\ new\ Product("Primogem",1,true,price,ProductCategory.GAMING);\r\n\ \ \ \ \ \ \ \ return\ testcase;\r\n\ \ \ \ }\r\n\ \ \ \ public\ static\ Coupon\ createCoupun(){\r\n\ \ \ \ \ \ \ \ Coupon\ testcase\ \=\ new\ Coupon("promo\ 11",\ 11,\ Coupon.Type.DISCOUNT,11,0.11);\r\n\ \ \ \ \ \ \ \ return\ testcase;\r\n}
+numComments=3
