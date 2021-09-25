@@ -1,15 +1,14 @@
 package MichaelHardityaJmartFA;
 
-
+/** menyimpan variabel id dan menjadi parent dari beberapa class lain
+*@author MichaelHarditya*/
 public class Recognizable
 {
-    // instance variables - replace the example below with your own
     public final int id;
     protected Recognizable(int id)
     {
         this.id = id;
     }
-
     public boolean equals(Object test)
     {
          return (test instanceof Recognizable && this.id == ((Recognizable) test).id);   
