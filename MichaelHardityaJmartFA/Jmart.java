@@ -10,7 +10,8 @@ package MichaelHardityaJmartFA;
 public class Jmart
 {
     public static void main(String[] args){
-
+        ShipmentDuration test= createShipmentDuration();
+        System.out.println(test.isDuration(ShipmentDuration.KARGO));
     }
     public static Product createProduct(){
         PriceTag price = new PriceTag(10000,5);
@@ -22,7 +23,7 @@ public class Jmart
         return testcase;
     }
     public static ShipmentDuration createShipmentDuration(){
-        ShipmentDuration testcase = new ShipmentDuration(ShipmentDuration.INSTANT, ShipmentDuration.REGULER);
+        ShipmentDuration testcase = new ShipmentDuration(ShipmentDuration.INSTANT, ShipmentDuration.REGULER, ShipmentDuration.SAME_DAY);
         return testcase;
     }
 }
