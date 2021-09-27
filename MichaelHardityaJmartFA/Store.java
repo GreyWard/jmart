@@ -1,6 +1,5 @@
 package MichaelHardityaJmartFA;
 
-
 public class Store extends Recognizable implements FileParser
 {
     public String name;

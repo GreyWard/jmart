@@ -59,6 +59,6 @@ public class Product extends Recognizable implements FileParser
         return false;
     }
     public String toString(){
-        return ("Name: "+name+"\nWeight: "+weight+"\nconditionUsed: "+conditionUsed+"\npriceTag: "+priceTag+"\ncategory: "+category+"\nrating: "+rating+"\nstoreId: "+storeId);
+        return ("Name: "+name+"\nWeight: "+weight+"\nconditionUsed: "+conditionUsed+"\npriceTag: "+priceTag.getAdjustedPrice()+"\ncategory: "+category+"\nrating: "+rating.getTotal()+"\nstoreId: "+storeId);
     }
 }
