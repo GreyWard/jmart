@@ -2,7 +2,9 @@ package MichaelHardityaJmartFA;
 
 public class Coupon extends Recognizable implements FileParser
 {
-    public static enum Type{DISCOUNT,REBATE};
+    public static enum Type{
+        DISCOUNT,
+        REBATE}
     public static String name;
     public static int code;
     public static double cut;

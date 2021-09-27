@@ -1,9 +1,12 @@
 #BlueJ class context
 comment0.target=Complaint
+comment0.text=menyimpan\ data\ complain\r\n@author\ Michael\ Harditya
 comment1.params=id\ payment\ desc
 comment1.target=Complaint(int,\ Payment,\ java.lang.String)
+comment1.text=@param\ id\ berisikan\ id\ transaksi\ {@code\ Complaint}\r\n@param\ payment\ berisikan\ id\ pembeli\ ({@code\ Payment.buyerId}),\ id\ toko\ ({@code\ Payment.storeId})\ dan\ id\ pembayaran\ ({@code\ Payment.id})\r\n@param\ desc\ berisikan\ deskripsi\ komplain\ {@code\ Complaint}
 comment2.params=id\ buyerId\ storeId\ paymentId\ desc
 comment2.target=Complaint(int,\ int,\ int,\ int,\ java.lang.String)
+comment2.text=@param\ id\ berisikan\ id\ transaksi\ {@code\ Complaint}\r\n@param\ buyerId\ berisikan\ id\ pembeli\ {@code\ Complaint}\r\n@param\ storeId\ berisikan\ id\ toko\ {@code\ Complaint}\r\n@param\ paymentId\ berisikan\ id\ pembayaran\ {@code\ Complaint}\r\n@param\ desc\ berisikan\ deskripsi\ komplain\ {@code\ Complaint}
 comment3.params=
 comment3.target=boolean\ validate()
 comment4.params=
