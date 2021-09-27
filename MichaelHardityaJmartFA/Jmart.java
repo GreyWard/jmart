@@ -20,9 +20,9 @@ public class Jmart
     public static Coupon createCoupun(){
         Coupon testcase = new Coupon("promo 11", 11, Coupon.Type.DISCOUNT,11,0.11);
         return testcase;
-    }*/
+    }
     public static ShipmentDuration createShipmentDuration(){
         ShipmentDuration testcase = new ShipmentDuration(ShipmentDuration.INSTANT, ShipmentDuration.REGULER, ShipmentDuration.SAME_DAY);
         return testcase;
-    }
+    }*/
 }

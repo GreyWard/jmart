@@ -2,7 +2,7 @@ package MichaelHardityaJmartFA;
 
 /** menyimpan variabel id dan menjadi parent dari beberapa class lain
 *@author MichaelHarditya*/
-public class Recognizable
+public abstract class Recognizable
 {
     public final int id;
     protected Recognizable(int id)
