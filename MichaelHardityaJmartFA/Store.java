@@ -24,4 +24,8 @@ public class Store extends Recognizable implements FileParser
     public boolean read(String content){
         return false;
     }
+    public String toString()
+    {
+        return ("name: "+name+"\naddress: "+address+"\nphoneNumber: "+phoneNumber);
+    }
 }
