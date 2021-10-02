@@ -14,7 +14,19 @@ public class Filter
      */
     public static void filterProductRating(ArrayList<ProductRating> list, double value, boolean less)
     {
-    
+        for (ProductRating iterate : list){
+            if (less == true){
+                if (iterate.getAverage() < value){
+                    list.remove(iterate);
+                }
+            }   
+            else if (less == false){
+                if (iterate.getAverage() >= value){
+                    list.remove(iterate);
+                }
+            } 
+        }
+
     }
 
     /**
