@@ -1,7 +1,10 @@
 package MichaelHardityaJmartFA;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 public class Store extends Recognizable implements FileParser
 {
+    public static final String REGEX_NAME = "[A-Z]*{3,19}[ ]!{2}";
+    public static final String REGEX_PHONE = "[0-9]{9,12}";
     public String name;
     public String address;
     public String phoneNumber;
