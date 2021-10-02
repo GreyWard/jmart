@@ -7,6 +7,9 @@ package MichaelHardityaJmartFA;
  * @author (your name)
  * @version (a version number or a date)
  */
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 public class Shipment implements FileParser
 {
     public String address;
@@ -34,11 +37,26 @@ public class Shipment implements FileParser
     public static Duration NEXT_DAY = new Duration((byte)(1 << 2));
     public static Duration REGULER = new Duration((byte)(1 << 3));
     public static Duration KARGO = new Duration((byte)(1 << 4));
+    public static final SimpleDateFormat ESTIMATION_FORMAT = new SimpleDateFormat("dd/MM/DD/yyyy");
     public byte bit;
     private Duration(byte bit){
         this.bit = bit;
     }
+    public String getEstimatedArrival(Date reference){
+        Calendar now = Calendar.getInstance();
+        now.setTime(reference);
+        if (bit == 2){
+            now.add(Calendar.DATE,1);
+        }
+        else if(bit == 3){
+            now.add(Calendar.DATE,2);
+        }
+        else if(bit == 4){
+            now.add(Calendar.DATE,5);            
+        }
+        return Shipment.Duration.ESTIMATION_FORMAT.format(now.getTime());
     }
+}
     public class MultiDuration
     {
         public byte bit;

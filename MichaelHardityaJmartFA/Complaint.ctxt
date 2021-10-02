@@ -1,6 +1,5 @@
 #BlueJ class context
 comment0.target=Complaint
-comment0.text=menyimpan\ data\ complain\r\n@author\ Michael\ Harditya
 comment1.params=id\ desc
 comment1.target=Complaint(int,\ java.lang.String)
 comment1.text=@param\ id\ berisikan\ id\ transaksi\ {@code\ Complaint}\r\n@param\ payment\ berisikan\ id\ pembeli\ ({@code\ Payment.buyerId}),\ id\ toko\ ({@code\ Payment.storeId})\ dan\ id\ pembayaran\ ({@code\ Payment.id})\r\n@param\ desc\ berisikan\ deskripsi\ komplain\ {@code\ Complaint}
