@@ -1,6 +1,6 @@
 package MichaelHardityaJmartFA;
-
-
+import java.util.Date;
+import java.util.ArrayList;
 /**
  * Write a description of class Invoice here.
  *
@@ -22,15 +22,21 @@ public abstract class Invoice extends Recognizable implements FileParser
         COMPLAINT,
         FINISHED,
         FAILED};
-    public String date;
+    public final Date date;
     public int buyerId;
     public int productId;
     public int complaintId;
     public Rating rating;
     public Status status;
+    public ArrayList<Record> history;
     /**
      * Constructor for objects of class Invoice
      */
+    class Record{
+        public Date date;
+        public String message;
+        public Status status;
+    }
     public Invoice(int id, int buyerId, int productId)
     {
         super(id);
@@ -38,7 +44,8 @@ public abstract class Invoice extends Recognizable implements FileParser
         this.productId = productId;
         this.rating = Rating.NONE;
         this.status = Status.WAITING_CONFIRMATION;
-        this.date = "27 Agustus 2021";
+        this.date = new Date();
+        this.history = new ArrayList<Record>();
     }
     public boolean read(String content)
     {
