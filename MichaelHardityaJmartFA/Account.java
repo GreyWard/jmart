@@ -1,12 +1,13 @@
 package MichaelHardityaJmartFA;
-
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 public class Account extends Recognizable implements FileParser
 {
     public String name;
     public String email;
     public String password;
-    
+    public static final String REGEX_EMAIL = "^((?! ).)*";
+    public static final String REGEX_PASSWORD = "";
     public Account(int id,String name,String email,String password)
     {
         super(id);
@@ -22,5 +23,12 @@ public class Account extends Recognizable implements FileParser
     public String toString()
     {
         return ("name: "+name+"\nemail: "+email+"\npassword: "+password);
+    }
+    public boolean validate(){
+        Pattern patMail = Pattern.compile(REGEX_EMAIL);
+        Pattern patPass = Pattern.compile(REGEX_PASSWORD);
+        Matcher mail = patMail.matcher(this.email);
+        Matcher pass = patPass.matcher(this.password);
+        return (mail.find() && pass.find());
     }
 }

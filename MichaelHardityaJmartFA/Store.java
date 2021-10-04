@@ -35,7 +35,6 @@ public class Store extends Recognizable implements FileParser
         Pattern patPhone = Pattern.compile(REGEX_PHONE);
         Matcher name = patName.matcher(this.name);
         Matcher phone = patPhone.matcher(this.phoneNumber);
-        boolean a = name.find() && phone.find();
-        return (a);
+        return (name.find() && phone.find());
     }
 }
