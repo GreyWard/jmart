@@ -6,7 +6,7 @@ public class Account extends Recognizable implements FileParser
     public String name;
     public String email;
     public String password;
-    public static final String REGEX_EMAIL = "^(?! |..)[A-Za-z0-9&_*~]+@[A-Za-z0-9.-]+$";
+    public static final String REGEX_EMAIL = "^(?! |..)[A-Za-z0-9][A-Za-z0-9&_*~]+@[A-Za-z0-9.][A-Za-z0-9.-]+";
     public static final String REGEX_PASSWORD = "^(?! )(?=[A-Za-z0-9])[A-Za-z0-9]{8}$";
     public Account(int id,String name,String email,String password)
     {
