@@ -3,6 +3,8 @@ package MichaelHardityaJmartFA;
    *@author Michael Harditya*/
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Complaint extends Recognizable implements FileParser
 {
     public Date date;
@@ -19,5 +21,11 @@ public class Complaint extends Recognizable implements FileParser
     public boolean read(String content)
     {
         return false;
+    }
+    public String toString(){
+        Calendar date = Calendar.getInstance();
+        date.setTime(this.date);
+        SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
+        return ("Complaint{date="+form.format(date.getTime())+",desc='"+desc+"'}");
     }
 }
