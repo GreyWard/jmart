@@ -8,7 +8,7 @@ public class Recognizable implements Comparable <Recognizable>{
         this.id = id;
     }
     public int compareTo(Recognizable other) {
-    	return (this.id / other.id);
+    	return Integer.compare(this.id,other.id);
     }
     public boolean equals(Object other){
          return (other instanceof Recognizable && this.id == ((Recognizable) other).id);   
