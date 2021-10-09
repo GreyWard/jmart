@@ -16,10 +16,10 @@ public class Recognizable implements Comparable <Recognizable>{
     public boolean equals(Recognizable other){
             return (this.id == other.id);
     }
-    public static <T> int getClosingId (Class<T> clazz) {
+    public static <T extends Recognizable> int getClosingId (Class<T> clazz) {
     	return 0;
     }
-    public static <T> int setClosingId (Class<T> clazz, int id) {
+    public static <T extends Recognizable> int setClosingId (Class<T> clazz, int id) {
     	return 0;
     }
 }
