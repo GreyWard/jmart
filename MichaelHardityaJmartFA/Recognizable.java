@@ -2,7 +2,7 @@ package MichaelHardityaJmartFA;
 
 /** menyimpan variabel id dan menjadi parent dari beberapa class lain
 *@author MichaelHarditya*/
-public abstract class Recognizable implements Comparable <Recognizable>{
+public class Recognizable implements Comparable <Recognizable>{
     public final int id;
     protected Recognizable(int id){
         this.id = id;
