@@ -98,6 +98,22 @@ public class Algorithm{
 		}
 		return null;
 	}
+	public static <T extends Comparable<? super T>> T max(T[] array) {
+		Iterator<T> iterator = Arrays.stream(array).iterator();
+		return max(iterator);
+	}
+	public static <T extends Comparable<? super T>> T max(Iterable<T> iterable) {
+		Iterator<T> iterator = iterable.iterator();
+		return max(iterator);
+	}
+	public static <T extends Comparable<? super T>> T max(Iterator<T> iterator) {
+		T x=null,y= null;
+		while(iterator.hasNext()) {
+			y= iterator.next();
+			x= iterator.next();
+		}
+		return max(x,y);
+	}
 
 	public static <T extends Comparable<? super T>> T max(T first, T second) {
 		if (first.compareTo(second)<0) {
@@ -107,7 +123,22 @@ public class Algorithm{
 			return second;
 		}
 	}
-
+	public static <T extends Comparable<? super T>> T min(T[] array) {
+		Iterator<T> iterator = Arrays.stream(array).iterator();
+		return max(iterator);
+	}
+	public static <T extends Comparable<? super T>> T min(Iterable<T> iterable) {
+		Iterator<T> iterator = iterable.iterator();
+		return max(iterator);
+	}
+	public static <T extends Comparable<? super T>> T min(Iterator<T> iterator) {
+		T x = null,y = null;
+		while(iterator.hasNext()) {
+			y= iterator.next();
+			x= iterator.next();
+		}
+		return max(x,y);
+	}
 	public static <T extends Comparable<? super T>> T min(T first, T second) {
 		if (second.compareTo(first)<0) {
 			return first;
