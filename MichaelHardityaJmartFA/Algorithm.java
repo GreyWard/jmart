@@ -114,7 +114,30 @@ public class Algorithm{
 		}
 		return max(x,y);
 	}
-
+	public static <T extends Comparable<? super T>> T max(T[] array, Comparator<? super T> comparator) {
+		Iterator<T> iterator = Arrays.stream(array).iterator();
+		return max(iterator);
+	}
+	public static <T extends Comparable<? super T>> T max(Iterable<T> iterable, Comparator<? super T> comparator) {
+		Iterator<T> iterator = iterable.iterator();
+		return max(iterator);
+	}
+	public static <T extends Comparable<? super T>> T max(Iterator<T> iterator, Comparator<? super T> comparator) {
+		T x=null,y= null;
+		while(iterator.hasNext()) {
+			y= iterator.next();
+			x= iterator.next();
+		}
+		return max(x,y);
+	}
+	public static <T extends Comparable<? super T>> T max(T first, T second, Comparator<? super T> comparator) {
+		if (first.compareTo(second)<0) {
+			return first;
+		}
+		else {
+			return second;
+		}
+	}
 	public static <T extends Comparable<? super T>> T max(T first, T second) {
 		if (first.compareTo(second)<0) {
 			return first;
@@ -138,6 +161,30 @@ public class Algorithm{
 			x= iterator.next();
 		}
 		return max(x,y);
+	}
+	public static <T extends Comparable<? super T>> T min(T[] array, Comparator<? super T> comparator) {
+		Iterator<T> iterator = Arrays.stream(array).iterator();
+		return max(iterator);
+	}
+	public static <T extends Comparable<? super T>> T min(Iterable<T> iterable, Comparator<? super T> comparator) {
+		Iterator<T> iterator = iterable.iterator();
+		return max(iterator);
+	}
+	public static <T extends Comparable<? super T>> T min(Iterator<T> iterator, Comparator<? super T> comparator) {
+		T x=null,y= null;
+		while(iterator.hasNext()) {
+			y= iterator.next();
+			x= iterator.next();
+		}
+		return max(x,y);
+	}
+	public static <T extends Comparable<? super T>> T min(T first, T second, Comparator<? super T> comparator) {
+		if (second.compareTo(first)<0) {
+			return first;
+		}
+		else {
+			return second;
+		}
 	}
 	public static <T extends Comparable<? super T>> T min(T first, T second) {
 		if (second.compareTo(first)<0) {
