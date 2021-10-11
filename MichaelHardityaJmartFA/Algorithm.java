@@ -1,6 +1,8 @@
 package MichaelHardityaJmartFA;
 import java.util.*;
-
+/** melakukan beberapa operasi perbandingan menggunakan generic
+ * menggunakan Iterator, Iterable, dan Predicate
+*@author MichaelHarditya*/
 public class Algorithm{
 	private Algorithm() {
 		
