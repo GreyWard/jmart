@@ -7,6 +7,37 @@ public class Algorithm{
 	private Algorithm() {
 		
 	}
+	public static <T> List<T> collect (T[] array, T value){
+		Iterator<T> iterator = Arrays.stream(array).iterator();
+		Predicate<T> pred = value::equals;
+		return collect(iterator,pred);
+	}
+	public static <T> List<T> collect (Iterable<T> iterable, T value){
+		Iterator<T> iterator = iterable.iterator();
+		Predicate<T> pred = value::equals;
+		return collect(iterator,pred);
+	}
+	public static <T> List<T> collect (Iterator<T> iterator, T value){
+		Predicate<T> pred = value::equals;		
+		return collect(iterator,pred);
+	}
+	public static <T> List<T> collect (T[] array, Predicate<T> pred){
+		Iterator<T> iterator = Arrays.stream(array).iterator();
+		return collect(iterator,pred);
+	}
+	public static <T> List<T> collect (Iterable<T> iterable, Predicate<T> pred){
+		Iterator<T> iterator = iterable.iterator();
+		return collect(iterator,pred);
+	}
+	public static <T> List<T> collect (Iterator<T> iterator, Predicate<T> pred){
+		List<T> list = new ArrayList<T>();
+		while (iterator.hasNext()) {
+			if (pred.predicate(iterator.next())) {
+				list.add(iterator.next());
+			}
+		}
+		return list;
+	}
 	public static <T> int count(T[] array,T value) {
 		Iterator<T> iterator = Arrays.stream(array).iterator();
 		Predicate<T> pred = value::equals;
@@ -67,6 +98,7 @@ public class Algorithm{
 		}
 		return null;
 	}
+
 	public static <T extends Comparable<? super T>> T max(T first, T second) {
 		if (first.compareTo(second)<0) {
 			return first;
@@ -75,6 +107,7 @@ public class Algorithm{
 			return second;
 		}
 	}
+
 	public static <T extends Comparable<? super T>> T min(T first, T second) {
 		if (second.compareTo(first)<0) {
 			return first;
