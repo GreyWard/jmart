@@ -1,7 +1,7 @@
 package MichaelHardityaJmartFA;
 
 
-public class Payment extends Invoice implements Transactor
+public class Payment extends Invoice
 {
     public Shipment shipment;
     public int productCount;
