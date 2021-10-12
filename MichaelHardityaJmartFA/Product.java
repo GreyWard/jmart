@@ -30,7 +30,6 @@ public class Product extends Recognizable implements FileParser
      * Menyimpan data produk
      */
     public Product(int id,int storeId, String name, int weight, boolean conditionUsed, PriceTag priceTag, ProductCategory category, Shipment.MultiDuration multiDuration){
-        super(id);
         this.storeId = storeId;
         this.name = name;
         this.weight = weight;
@@ -45,7 +44,6 @@ public class Product extends Recognizable implements FileParser
      * @param storeId menyimpan id toko {@code Product} menggunakan class {@code Store}
      */
     public Product(int id, Store store, String name, int weight, boolean conditionUsed, PriceTag priceTag, ProductCategory category){
-        super(id);
         this.storeId = store.id;
         this.name = name;
         this.weight = weight;

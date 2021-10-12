@@ -10,7 +10,6 @@ public class Account extends Recognizable implements FileParser
     public static final String REGEX_PASSWORD = "^(?! )(?=[A-Za-z0-9])[A-Za-z0-9]{8}$";
     public Account(int id,String name,String email,String password)
     {
-        super(id);
         this.name = name;
         this.email = email;
         this.password = password;

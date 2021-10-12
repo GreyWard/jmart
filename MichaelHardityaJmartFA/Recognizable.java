@@ -4,8 +4,8 @@ package MichaelHardityaJmartFA;
 *@author MichaelHarditya*/
 public class Recognizable implements Comparable <Recognizable>{
     public final int id;
-    protected Recognizable(int id){
-        this.id = id;
+    protected Recognizable(){
+        this.id = 0;
     }
     public int compareTo(Recognizable other) {
     	return Integer.compare(this.id,other.id);
