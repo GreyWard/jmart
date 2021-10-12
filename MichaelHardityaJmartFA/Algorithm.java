@@ -68,6 +68,36 @@ public class Algorithm{
 		}
 		return counter;
 	}
+	public static <T> boolean exists(T[] array,T value) {
+		Iterator<T> iterator = Arrays.stream(array).iterator();
+		Predicate<T> pred = value::equals;
+		return exists(iterator,pred);
+	}
+	public static <T> boolean exists(Iterable<T> iterable, T value) {
+		Predicate<T> pred = value::equals;
+		return exists(iterable, pred);
+	}
+	public static <T> boolean exists(Iterator<T> iterator, T value) {
+		Predicate<T> pred = value::equals;
+		return exists(iterator,pred);
+	}
+	public static <T> boolean exists(T[] array,Predicate<T> pred) {
+		Iterator<T> iterator = Arrays.stream(array).iterator();
+		return exists(iterator,pred);
+	}
+	public static <T> boolean exists(Iterable<T> iterable, Predicate<T> pred) {
+		Iterator<T> iterator = iterable.iterator();
+		return exists(iterator,pred);
+	}
+	public static <T> boolean exists(Iterator<T> iterator, Predicate<T> pred) {
+		while(iterator.hasNext()) {
+			T x= iterator.next();
+			if (pred.predicate(x)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	public static <T> T find(T[] array,T value) {
 		Iterator<T> iterator = Arrays.stream(array).iterator();
 		Predicate<T> pred = value::equals;
