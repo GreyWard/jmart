@@ -8,14 +8,16 @@ public class Store extends Recognizable
     public String name;
     public String address;
     public String phoneNumber;
-    public Store(int accountId,String name,String address,String phoneNumber)
+    public double balance;
+    public Store(int accountId,String name,String address,String phoneNumber,double balance)
     {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.balance = balance;
     }
 
-    public Store(Account account,String name,String address,String phoneNumber)
+    /*public Store(Account account,String name,String address,String phoneNumber)
     {
         this.name = name;
         this.address = address;
@@ -23,7 +25,7 @@ public class Store extends Recognizable
     }
     public boolean read(String content){
         return false;
-    }
+    }*/
     public String toString()
     {
         return ("name: "+name+"\naddress: "+address+"\nphoneNumber: "+phoneNumber);
