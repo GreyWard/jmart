@@ -18,45 +18,28 @@ public class Product extends Recognizable
      * @param category menyimpan kategori {@code Product} pada class {@code ProductCategory}
      * @param rating menyimpan rating {@code Product} pada class {@code ProductRating}
      */
-    public int storeId;
+    public int accountId;
     public String name;
     public int weight;
     public boolean conditionUsed;
-    public PriceTag priceTag;
+    public double discount;
+    public double price;
     public ProductCategory category;
-    public ProductRating rating;
-    public Shipment.MultiDuration multiDuration;
+    public byte shipmentPlans;
     /**
      * Menyimpan data produk
      */
-    public Product(int id,int storeId, String name, int weight, boolean conditionUsed, PriceTag priceTag, ProductCategory category, Shipment.MultiDuration multiDuration){
-        this.storeId = storeId;
+    public Product(int accountId, String name, int weight, boolean conditionUsed, double price, double discount, ProductCategory category, byte shipmentPlans){
+        this.accountId = accountId;
         this.name = name;
         this.weight = weight;
         this.conditionUsed = conditionUsed;
-        this.priceTag = priceTag;
+        this.price = price;
         this.category = category;
-        this.rating = rating;
-        this.multiDuration = multiDuration;
-    }
-    /**
-     * Menyimpan data produk
-     * @param storeId menyimpan id toko {@code Product} menggunakan class {@code Store}
-     */
-    public Product(int id, Store store, String name, int weight, boolean conditionUsed, PriceTag priceTag, ProductCategory category){
-        this.storeId = store.id;
-        this.name = name;
-        this.weight = weight;
-        this.conditionUsed = conditionUsed;
-        this.priceTag = priceTag;
-        this.category = category;
-        this.rating = rating;
-    }
-    public boolean read(String content)
-    {
-        return false;
+        this.discount = discount;
+        this.shipmentPlans = shipmentPlans;
     }
     public String toString(){
-        return ("Name: "+name+"\nWeight: "+weight+"\nconditionUsed: "+conditionUsed+"\npriceTag: "+priceTag.getAdjustedPrice()+"\ncategory: "+category+"\nrating: "+rating.getTotal()+"\nstoreId: "+storeId);
+        return ("Name: "+name+"\nWeight: "+weight+"\nconditionUsed: "+conditionUsed+"\nprice: "+price+"\ndiscount: "+discount+"\ncategory: "+category+"\naccountId: "+accountId);
     }
 }

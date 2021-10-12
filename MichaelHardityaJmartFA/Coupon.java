@@ -24,21 +24,21 @@ public class Coupon extends Recognizable
     public boolean isUsed(){
         return used;
     }
-    public boolean canApply(PriceTag pricetag){
-        if ((pricetag.getAdjustedPrice()>=this.minimum)&&(this.used==false)){
+    public boolean canApply(double price, double discount){
+        if ((Treasury.getAdjustedPrice(price,discount)>=this.minimum)&&(this.used==false)){
             return true;
         }
         else{
             return false;
         }
     }
-    public double apply(PriceTag pricetag){
+    public double apply(double price, double discount){
         this.used = true;
         if (this.type == Coupon.Type.DISCOUNT){
-            return (pricetag.getAdjustedPrice()*(100-this.cut)/100);
+            return (Treasury.getAdjustedPrice(price,discount)*(100-this.cut)/100);
         }
         else{
-        return (pricetag.getAdjustedPrice()-this.cut);
+        return (Treasury.getAdjustedPrice(price,discount)-this.cut);
     }
     }
     public boolean read(String content)
