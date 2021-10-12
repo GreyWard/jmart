@@ -6,7 +6,7 @@ package MichaelHardityaJmartFA;
  *
  * @author Michael Harditya
  */
-public class Product extends Recognizable implements FileParser
+public class Product extends Recognizable
 {   
     /**
      * Menyimpan data produk

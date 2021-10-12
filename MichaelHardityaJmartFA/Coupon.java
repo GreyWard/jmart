@@ -1,6 +1,6 @@
 package MichaelHardityaJmartFA;
 
-public class Coupon extends Recognizable implements FileParser
+public class Coupon extends Recognizable
 {
     public static enum Type{
         DISCOUNT,
