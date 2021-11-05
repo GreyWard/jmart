@@ -37,7 +37,7 @@ public abstract class Invoice extends Recognizable
         public String message;
         public Status status;
     }
-    public Invoice(int id, int buyerId, int productId)
+    public Invoice(int buyerId, int productId)
     {
         this.buyerId = buyerId;
         this.productId = productId;

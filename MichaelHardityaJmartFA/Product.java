@@ -19,13 +19,13 @@ public class Product extends Recognizable
      * @param rating menyimpan rating {@code Product} pada class {@code ProductRating}
      */
     public int accountId;
-    public String name;
-    public int weight;
+    public ProductCategory category;
     public boolean conditionUsed;
     public double discount;
+    public String name;
     public double price;
-    public ProductCategory category;
     public byte shipmentPlans;
+    public int weight;
     /**
      * Menyimpan data produk
      */
