@@ -12,7 +12,7 @@ public class Complaint extends Recognizable
    /**@param id berisikan id transaksi {@code Complaint}
    *@param payment berisikan id pembeli ({@code Payment.buyerId}), id toko ({@code Payment.storeId}) dan id pembayaran ({@code Payment.id})
    *@param desc berisikan deskripsi komplain {@code Complaint}*/
-    public Complaint(int id, String desc)
+    public Complaint(String desc)
     {
         this.date = new Date();
         this.desc = desc;
