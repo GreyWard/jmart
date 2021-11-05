@@ -1,7 +1,7 @@
 package MichaelHardityaJmartFA;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-public class Store extends Recognizable
+public class Store
 {
     public static final String REGEX_NAME = "[A-Z][a-zA-Z0-9]{3,19}[ ]{1}?";
     public static final String REGEX_PHONE = "[0-9]{9,12}";

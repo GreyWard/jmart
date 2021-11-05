@@ -6,10 +6,13 @@ public class Account extends Recognizable
     public String name;
     public String email;
     public String password;
+    public Store store;
+    public double balance;
     public static final String REGEX_EMAIL = "^(?!.)[A-Za-z0-9&_*~][A-Za-z0-9&_*~.]+@[^. -][-.A-Za-z0-9]+$";
     public static final String REGEX_PASSWORD = "^(?! )(?=[A-Za-z0-9])[A-Za-z0-9]{8}$";
-    public Account(int id,String name,String email,String password)
+    public Account(String name,String email,String password, double balance)
     {
+    	this.balance = balance;
         this.name = name;
         this.email = email;
         this.password = password;

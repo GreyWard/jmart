@@ -1,5 +1,4 @@
 package MichaelHardityaJmartFA;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,7 +6,6 @@ import java.util.List;
 import com.google.gson.*;
 /**
  * a JMart Apps for managing a store
- *
  * @author Michael Harditya
  * @version 0.0.1
  */
