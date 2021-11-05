@@ -7,7 +7,7 @@ public class Payment extends Invoice
     public int productCount;
     public Payment(int id,int buyerId,int productId,int productCount, Shipment shipment)
     {
-        super(id, buyerId, productId);
+        super(buyerId, productId);
         this.productId = productId;
         this.productCount = productCount;
         this.shipment = shipment;
