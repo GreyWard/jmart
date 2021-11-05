@@ -5,13 +5,13 @@ public class Coupon extends Recognizable
     public static enum Type{
         DISCOUNT,
         REBATE}
-    public static String name;
-    public static int code;
-    public static double cut;
-    public static Type type;
-    public static double minimum;
+    public final int code;
+    public final double cut;
+    public final double minimum;
+    public final String name;
+    public final Type type;
     private boolean used;
-    public Coupon(int id, String name, int code, Type type, double cut, double minimum)
+    public Coupon (String name, int code, Type type, double cut, double minimum)
     {
         this.name = name;
         this.code = code;
