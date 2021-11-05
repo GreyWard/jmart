@@ -128,6 +128,14 @@ public class Algorithm{
 		}
 		return null;
 	}
+	public static <T extends Comparable<? super T>> T max(T first, T second) {
+		if (first.compareTo(second)<0) {
+			return first;
+		}
+		else {
+			return second;
+		}
+	}
 	public static <T extends Comparable<? super T>> T max(T[] array) {
 		Iterator<T> iterator = Arrays.stream(array).iterator();
 		return max(iterator);
@@ -144,6 +152,14 @@ public class Algorithm{
 			max = max(x,y);
 		}
 		return max;
+	}
+	public static <T extends Comparable<? super T>> T max(T first, T second, Comparator<? super T> comparator) {
+		if (first.compareTo(second)<0) {
+			return first;
+		}
+		else {
+			return second;
+		}
 	}
 	public static <T extends Comparable<? super T>> T max(T[] array, Comparator<? super T> comparator) {
 		Iterator<T> iterator = Arrays.stream(array).iterator();
@@ -162,16 +178,8 @@ public class Algorithm{
 		}
 		return max;
 	}
-	public static <T extends Comparable<? super T>> T max(T first, T second, Comparator<? super T> comparator) {
-		if (first.compareTo(second)<0) {
-			return first;
-		}
-		else {
-			return second;
-		}
-	}
-	public static <T extends Comparable<? super T>> T max(T first, T second) {
-		if (first.compareTo(second)<0) {
+	public static <T extends Comparable<? super T>> T min(T first, T second) {
+		if (second.compareTo(first)<0) {
 			return first;
 		}
 		else {
@@ -195,6 +203,14 @@ public class Algorithm{
 		}
 		return min;
 	}
+	public static <T extends Comparable<? super T>> T min(T first, T second, Comparator<? super T> comparator) {
+		if (second.compareTo(first)<0) {
+			return first;
+		}
+		else {
+			return second;
+		}
+	}
 	public static <T extends Comparable<? super T>> T min(T[] array, Comparator<? super T> comparator) {
 		Iterator<T> iterator = Arrays.stream(array).iterator();
 		return min(iterator);
@@ -211,21 +227,5 @@ public class Algorithm{
 			min = min(x,y);
 		}
 		return min;
-	}
-	public static <T extends Comparable<? super T>> T min(T first, T second, Comparator<? super T> comparator) {
-		if (second.compareTo(first)<0) {
-			return first;
-		}
-		else {
-			return second;
-		}
-	}
-	public static <T extends Comparable<? super T>> T min(T first, T second) {
-		if (second.compareTo(first)<0) {
-			return first;
-		}
-		else {
-			return second;
-		}
 	}
 }
