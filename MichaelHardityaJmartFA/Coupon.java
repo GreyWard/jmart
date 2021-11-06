@@ -1,6 +1,6 @@
 package MichaelHardityaJmartFA;
 
-public class Coupon extends Recognizable
+public class Coupon extends Serializable
 {
     public static enum Type{
         DISCOUNT,

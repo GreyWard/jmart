@@ -1,7 +1,7 @@
 package MichaelHardityaJmartFA;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-public class Account extends Recognizable
+public class Account extends Serializable
 {
     public String name;
     public String email;

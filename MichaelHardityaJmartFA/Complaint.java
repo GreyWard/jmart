@@ -5,7 +5,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Complaint extends Recognizable
+public class Complaint extends Serializable
 {
     public Date date;
     public String desc;

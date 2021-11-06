@@ -6,7 +6,7 @@ package MichaelHardityaJmartFA;
  *
  * @author Michael Harditya
  */
-public class Product extends Recognizable
+public class Product extends Serializable
 {   
     /**
      * Menyimpan data produk
