@@ -1,8 +1,7 @@
 package MichaelHardityaJmartFA;
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
@@ -18,7 +17,7 @@ class Jmart
 		return filteredList;
 	}
 	public static List<Product> filterByPrice (List<Product> list, double minPrice, double maxPrice){
-		List<Product> filteredList = null;
+		List<Product> filteredList = new ArrayList<Product>();
 		if (maxPrice == 0.0) {
 			filteredList = Algorithm.<Product>collect(list,prod -> prod.price >= minPrice);
 		}
@@ -26,7 +25,7 @@ class Jmart
 			filteredList = Algorithm.<Product>collect(list,prod -> prod.price <= maxPrice);
 		}
 		else {
-			filteredList = Algorithm.<Product>collect(list,prod -> prod.price <= maxPrice & prod.price >= minPrice);
+			filteredList = Algorithm.<Product>collect(list,prod -> prod.price <= maxPrice && prod.price >= minPrice);
 		}
 		return filteredList;
 	}

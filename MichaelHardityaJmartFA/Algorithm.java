@@ -31,9 +31,11 @@ public class Algorithm{
 	}
 	public static <T> List<T> collect (Iterator<T> iterator, Predicate<T> pred){
 		List<T> list = new ArrayList<T>();
+		T check;
 		while (iterator.hasNext()) {
-			if (pred.predicate(iterator.next())) {
-				list.add(iterator.next());
+			check = iterator.next();
+			if (pred.predicate(check)) {
+				list.add(check);
 			}
 		}
 		return list;
