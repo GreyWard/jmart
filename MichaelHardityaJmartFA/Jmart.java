@@ -25,6 +25,15 @@ class Jmart
 		List<Product> filteredList = Algorithm.<Product>collect(list,prod -> prod.category == category);
 		return filteredList;
 	}
+	public static List<Product> filterByName (List<Product> list, String search, int page, int pageSize){
+		List<Product> filteredList = new ArrayList<Product>();
+		for (Product check : list) {
+			if (check.name.toLowerCase().contains(search.toLowerCase())) {
+				filteredList.add(check);
+			}
+		}
+		return paginate(filteredList,page,pageSize,pred -> true);
+	}
 	public static List<Product> filterByPrice (List<Product> list, double minPrice, double maxPrice){
 		List<Product> filteredList = new ArrayList<Product>();
 		if (maxPrice == 0.0) {
