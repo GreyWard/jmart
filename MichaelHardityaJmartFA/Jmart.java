@@ -12,7 +12,15 @@ import com.google.gson.stream.JsonReader;
  */
 class Jmart
 {
-
+	public static List<Product> filterByAccountId (List<Product> list, int accountId, int page, int pageSize){
+		List<Product> filteredList = new ArrayList<Product>();
+		for(Product check : list) {
+			if (check.accountId == accountId) {
+				filteredList.add(check);
+			}
+		}
+		return paginate(filteredList,page,pageSize,pred -> true);
+	}
 	public static List<Product> filterByCategory (List<Product> list, ProductCategory category){
 		List<Product> filteredList = Algorithm.<Product>collect(list,prod -> prod.category == category);
 		return filteredList;
