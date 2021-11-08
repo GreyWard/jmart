@@ -52,8 +52,11 @@ class Jmart
     	try
     	{
     		List<Product> list = read("D:/JavaProject/jmart/lib/randomProductList.json");
-    		List<Product> filtered = filterByPrice(list,0.0,20000.0);
-    		filtered.forEach(product -> System.out.println(product.price));
+    		List<Product> filtered1 = filterByName(list,"gtx",1,5);
+    		filtered1.forEach(product -> System.out.println(product.name));
+    		System.out.println("------------------------------");
+    		List<Product> filtered2 = filterByAccountId(list,1,0,5);
+    		filtered2.forEach(product -> System.out.println(product.name));
     	}
     	catch (Throwable t)
     	{
