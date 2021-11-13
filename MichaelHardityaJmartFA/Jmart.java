@@ -49,7 +49,7 @@ class Jmart
 	}
 	
     public static void main(String[] args){
-    	/*try
+    	try
     	{
     		String filepath = "a/b/account.json";
     		JsonTable<Account> tableAccount = new JsonTable<>(Account.class, filepath);
@@ -62,7 +62,7 @@ class Jmart
     	catch (Throwable t)
     	{
     		t.printStackTrace();
-    	}*/
+    	}
     }
     private static List<Product> paginate (List<Product> list, int page, int pageSize, Predicate<Product> pred){
     	List<Product> paginatedList = new ArrayList<Product>();

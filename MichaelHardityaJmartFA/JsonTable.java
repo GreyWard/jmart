@@ -11,17 +11,19 @@ public class JsonTable<T> extends Vector<T>{
 	public final String filepath;
 	private static final Gson gson = new Gson();
 	public JsonTable (Class <T> clazz, String filepath) throws IOException {
-		/*try {
+		try {
 			@SuppressWarnings("unchecked")
 			Class<T[]> array = (Class<T[]>) Array.newInstance(clazz, 0).getClass();
 			T[] genArray = JsonTable.readJson(array, filepath);
+			if (genArray != null) {
 			Collections.addAll(this, genArray);
+			}
 		} catch (FileNotFoundException e) {
 			File file = new File(filepath);
 			File parent = file.getParentFile();
 			parent.mkdirs();
 			file.createNewFile();
-		}*/
+		}
 		this.filepath = filepath;
 	}
 	public static <T> T readJson (Class <T> clazz, String filepath) throws FileNotFoundException{
@@ -30,7 +32,7 @@ public class JsonTable<T> extends Vector<T>{
 		return result;
 	}
 	public void writeJson () throws IOException{
-		writeJson(this.gson, this.filepath);
+		writeJson(this, this.filepath);
 	}
 	public static void writeJson (Object object, String filepath) throws IOException{
 		//write file
