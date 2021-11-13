@@ -51,12 +51,13 @@ class Jmart
     public static void main(String[] args){
     	try
     	{
-    		List<Product> list = read("D:/JavaProject/jmart/lib/randomProductList.json");
-    		List<Product> filtered1 = filterByName(list,"gtx",1,5);
-    		filtered1.forEach(product -> System.out.println(product.name));
-    		System.out.println("------------------------------");
-    		List<Product> filtered2 = filterByAccountId(list,1,0,5);
-    		filtered2.forEach(product -> System.out.println(product.name));
+    		String filepath = "a/b/account.json";
+    		JsonTable<Account> tableAccount = new JsonTable<>(Account.class, filepath);
+    		tableAccount.add(new Account("name","email","password",0));
+    		tableAccount.writeJson();
+    		tableAccount = new JsonTable<>(Account.class,filepath);
+    		tableAccount.forEach(account -> System.out.println(account.toString()));
+    		
     	}
     	catch (Throwable t)
     	{
