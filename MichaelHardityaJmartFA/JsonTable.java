@@ -2,11 +2,11 @@ package MichaelHardityaJmartFA;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.Collections;
-import java.util.List;
 import java.util.Vector;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
+@SuppressWarnings("serial")
 public class JsonTable<T> extends Vector<T>{
 	public final String filepath;
 	private static final Gson gson = new Gson();

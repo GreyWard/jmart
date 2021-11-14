@@ -19,7 +19,7 @@ class Jmart
 				filteredList.add(check);
 			}
 		}
-		return paginate(filteredList,page,pageSize,pred -> true);
+		return Algorithm.<Product>paginate(filteredList,page,pageSize,pred -> true);
 	}
 	public static List<Product> filterByCategory (List<Product> list, ProductCategory category){
 		List<Product> filteredList = Algorithm.<Product>collect(list,prod -> prod.category == category);
@@ -32,7 +32,7 @@ class Jmart
 				filteredList.add(check);
 			}
 		}
-		return paginate(filteredList,page,pageSize,pred -> true);
+		return Algorithm.<Product>paginate(filteredList,page,pageSize,pred -> true);
 	}
 	public static List<Product> filterByPrice (List<Product> list, double minPrice, double maxPrice){
 		List<Product> filteredList = new ArrayList<Product>();
@@ -63,19 +63,6 @@ class Jmart
     	{
     		t.printStackTrace();
     	}
-    }
-    private static List<Product> paginate (List<Product> list, int page, int pageSize, Predicate<Product> pred){
-    	List<Product> paginatedList = new ArrayList<Product>();
-    	int x = 0;
-    	int start = page * pageSize;
-    	int end = start + pageSize;
-		for(Product check : list) {
-			if (x>=start && x < end) {
-			paginatedList.add(check);
-			}
-			x++;
-		}
-		return paginatedList;
     }
 	public static List<Product> read(String string) throws FileNotFoundException {
 		JsonReader readed = new JsonReader(new FileReader(string));

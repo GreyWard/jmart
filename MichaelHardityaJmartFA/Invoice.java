@@ -42,6 +42,7 @@ public abstract class Invoice extends Serializable
         this.buyerId = buyerId;
         this.productId = productId;
         this.rating = Rating.NONE;
+        this.complaintId = -1;
         this.status = Status.WAITING_CONFIRMATION;
         this.date = new Date();
         this.history = new ArrayList<Record>();
