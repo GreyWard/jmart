@@ -1,6 +1,5 @@
 package MichaelHardityaJmartFA;
 import java.util.Date;
-import java.util.ArrayList;
 /**
  * Write a description of class Invoice here.
  *
@@ -28,15 +27,10 @@ public abstract class Invoice extends Serializable
     public int complaintId;
     public Rating rating;
     public Status status;
-    public ArrayList<Record> history;
     /**
      * Constructor for objects of class Invoice
      */
-    class Record{
-        public Date date;
-        public String message;
-        public Status status;
-    }
+    
     public Invoice(int buyerId, int productId)
     {
         this.buyerId = buyerId;
@@ -45,11 +39,10 @@ public abstract class Invoice extends Serializable
         this.complaintId = -1;
         this.status = Status.WAITING_CONFIRMATION;
         this.date = new Date();
-        this.history = new ArrayList<Record>();
     }
     public boolean read(String content)
     {
         return false;
     }
-    public abstract double getTotalPay();
+    public abstract double getTotalPay(Product product);
 }

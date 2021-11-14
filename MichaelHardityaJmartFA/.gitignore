@@ -28,3 +28,5 @@
 /Jmart$Country.class
 /Shipment$Plan.class
 /Serializable.class
+/Payment$Record.class
+/PhoneTopUp.class
