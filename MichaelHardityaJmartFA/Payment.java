@@ -15,7 +15,7 @@ public class Payment extends Invoice
         this.productCount = productCount;
         this.shipment = shipment;
     }
-    class Record{
+    public class Record{
         public Date date;
         public String message;
         public Status status;

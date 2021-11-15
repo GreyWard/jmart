@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+
+import MichaelHardityaJmartFA.Invoice.Status;
 /**
  * a JMart Apps for managing a store
  * @author Michael Harditya
@@ -12,7 +14,11 @@ import com.google.gson.stream.JsonReader;
  */
 class Jmart
 {
-	public static List<Product> filterByAccountId (List<Product> list, int accountId, int page, int pageSize){
+	protected static long DELIVERED_LIMIT_MS = 120000;
+	protected static long ON_DELIVERY_LIMIT_MS = 100000;
+	protected static long ON_PROGRESS_LIMIT_MS = 50000;
+	protected static long WAITING_CONF_LIMIT_MS = 30000;
+	/*public static List<Product> filterByAccountId (List<Product> list, int accountId, int page, int pageSize){
 		List<Product> filteredList = new ArrayList<Product>();
 		for(Product check : list) {
 			if (check.accountId == accountId) {
@@ -46,7 +52,7 @@ class Jmart
 			filteredList = Algorithm.<Product>collect(list,prod -> prod.price <= maxPrice && prod.price >= minPrice);
 		}
 		return filteredList;
-	}
+	}*/
 	
     public static void main(String[] args){
     	try
@@ -64,10 +70,38 @@ class Jmart
     		t.printStackTrace();
     	}
     }
-	public static List<Product> read(String string) throws FileNotFoundException {
+    public static boolean paymentTimekeeper (Payment payment) {
+    	long time = payment.history.get(payment.history.size()-1).date.getTime();
+    	if (payment.history.get(payment.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {
+    		if (time > WAITING_CONF_LIMIT_MS) {
+    			Payment.Record newer = payment.new Record(Status.FAILED,"gagal dikonfirmasi");
+    			payment.history.add(newer);
+    		}
+    	}
+    	if (payment.history.get(payment.history.size()-1).status == Invoice.Status.ON_PROGRESS) {
+    		if (time > ON_PROGRESS_LIMIT_MS) {
+    			Payment.Record newer = payment.new Record(Status.FAILED,"gagal diproses");
+    			payment.history.add(newer);
+    		}
+    	}
+    	if (payment.history.get(payment.history.size()-1).status == Invoice.Status.ON_DELIVERY) {
+    		if (time > ON_DELIVERY_LIMIT_MS) {
+    			Payment.Record newer = payment.new Record(Status.DELIVERED,"sudah diantar");
+    			payment.history.add(newer);
+    		}
+    	}
+    	if (payment.history.get(payment.history.size()-1).status == Invoice.Status.DELIVERED) {
+    		if (time > DELIVERED_LIMIT_MS) {
+    			Payment.Record newer = payment.new Record(Status.FINISHED,"sudah selesai");
+    			payment.history.add(newer);
+    		}
+    	}
+    	return true;
+    }
+	/*public static List<Product> read(String string) throws FileNotFoundException {
 		JsonReader readed = new JsonReader(new FileReader(string));
 		Product[] result = new Gson().fromJson(readed, Product[].class);
 		List<Product> list = Algorithm.<Product>collect(result,prod -> true);
 		return list;
-	}
+	}*/
 }
