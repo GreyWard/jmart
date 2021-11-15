@@ -57,13 +57,25 @@ class Jmart
     public static void main(String[] args){
     	try
     	{
-    		String filepath = "a/b/account.json";
+    		/*String filepath = "a/b/account.json";
     		JsonTable<Account> tableAccount = new JsonTable<>(Account.class, filepath);
     		tableAccount.add(new Account("name","email","password",0));
     		tableAccount.writeJson();
     		tableAccount = new JsonTable<>(Account.class,filepath);
-    		tableAccount.forEach(account -> System.out.println(account.toString()));
-    		
+    		tableAccount.forEach(account -> System.out.println(account.toString()));*/
+    		JsonTable<Payment> table = new JsonTable<>(Payment.class, "lib/randomPaymentList.json");
+    		ObjectPoolThread<Payment> paymentPool = new ObjectPoolThread<Payment>("Thread-PP",Jmart::paymentTimekeeper);
+    		paymentPool.start();
+    		table.forEach(payment -> paymentPool.add(payment));
+    		while (paymentPool.size() != 0);
+    		paymentPool.exit();
+    		while(paymentPool.isAlive());
+    		System.out.println("Thread exited successfully");
+    		Gson gson = new Gson();
+    		table.forEach(payment -> {
+    			String history = gson.toJson(payment.history);
+    			System.out.println(history);
+    		});
     	}
     	catch (Throwable t)
     	{
