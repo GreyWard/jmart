@@ -2,6 +2,8 @@ package com.MichaelHardityaJmartFA.controller;
 
 
 import com.MichaelHardityaJmartFA.Account;
+import com.MichaelHardityaJmartFA.Algorithm;
+import com.MichaelHardityaJmartFA.Store;
 import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
 import com.MichaelHardityaJmartFA.dbjson.Serializable;
@@ -49,8 +51,8 @@ public class AccountController implements BasicGetController<Account>
 			return null;
 		}
 	}
-	@GetMapping("/account")
-	Account registerStore
+	@PostMapping("/account/{id}/registerStore")
+	Store registerStore
 	(
 		@RequestParam int id,
 		@RequestParam String name,
@@ -58,7 +60,13 @@ public class AccountController implements BasicGetController<Account>
 		@RequestParam String phoneNumber
 	)
 	{
-		return new Account(name, address, phoneNumber, 0);
+		Account found = Algorithm.<Account>find(accountTable,prod -> prod.id == id);
+		if (found.store == null) {
+			found.store.address = address;
+			found.store.phoneNumber = phoneNumber;
+			found.store.name = name;
+		}
+		return found.store;
 	}
 	//@GetMapping("/account")
 	//boolean topUp (int id, double balance) {
