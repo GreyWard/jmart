@@ -72,7 +72,7 @@ public class AccountController implements BasicGetController<Account>
 	//boolean topUp (int id, double balance) {
 		
 	//}
-	@GetMapping
+	//@GetMapping
 	public JsonTable getJsonTable() {
 		return accountTable;
 	}
