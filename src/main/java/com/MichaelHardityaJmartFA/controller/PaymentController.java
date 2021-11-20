@@ -1,9 +1,12 @@
 package com.MichaelHardityaJmartFA.controller;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.MichaelHardityaJmartFA.Account;
 import com.MichaelHardityaJmartFA.Invoice;
 import com.MichaelHardityaJmartFA.Payment;
 import com.MichaelHardityaJmartFA.Invoice.Status;
+import com.MichaelHardityaJmartFA.ObjectPoolThread;
 import com.MichaelHardityaJmartFA.Payment.Record;
 import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
@@ -16,6 +19,7 @@ public class PaymentController implements BasicGetController<Payment>
 	protected static long WAITING_CONF_LIMIT_MS = 30000;
 	@JsonAutowired(filepath = "a/b/payment.json", value = Payment.class) 
     public static JsonTable<Payment> paymentTable;
+	ObjectPoolThread<Payment> poolThread = new ObjectPoolThread<Payment>("Thread-PP",PaymentController::timekeeper);
 	
 	public JsonTable getJsonTable() {
 		return paymentTable;
