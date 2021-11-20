@@ -26,11 +26,15 @@ public class AccountController implements BasicGetController<Account>
     public static JsonTable<Account> accountTable;
 	@GetMapping
 	String index() { return "account page"; }
-	//@PostMapping("/account/login")
-	//Account login (String email, String password) {
-		//accountTable = getJsonTable();
-		//accountTable.
-	//}
+	@PostMapping("/account/login")
+	Account login (String email, String password) {
+		Account found = Algorithm.<Account>find(accountTable,prod -> prod.email == email);
+		if (found.password == password) {
+			return found;
+		}else {
+			return null;
+		}
+	}
 	@PostMapping("/account/register")
 	Account register
 	(
