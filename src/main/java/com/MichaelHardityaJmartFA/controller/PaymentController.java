@@ -1,6 +1,7 @@
 package com.MichaelHardityaJmartFA.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.MichaelHardityaJmartFA.Account;
 import com.MichaelHardityaJmartFA.Invoice;
@@ -20,10 +21,24 @@ public class PaymentController implements BasicGetController<Payment>
 	@JsonAutowired(filepath = "a/b/payment.json", value = Payment.class) 
     public static JsonTable<Payment> paymentTable;
 	ObjectPoolThread<Payment> poolThread = new ObjectPoolThread<Payment>("Thread-PP",PaymentController::timekeeper);
-	
+	//notyet done
+	@PostMapping("/payment/{id}/accept")
+	boolean accept(@RequestParam int id)
+	{
+		return false;
+	}
+	@PostMapping("/payment/{id}/cancel")
+	boolean cancel(@RequestParam int id) {
+		return false;
+	}
+	@PostMapping("/payment/{id}/submit")
+	boolean submit(@RequestParam int id) {
+		return false;
+	}
 	public JsonTable getJsonTable() {
 		return paymentTable;
 	}
+	//not yet done
 	public static boolean timekeeper (Payment payment) {
     	long time = payment.history.get(payment.history.size()-1).date.getTime();
     	if (payment.history.get(payment.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {

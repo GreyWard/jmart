@@ -85,34 +85,6 @@ class Jmart
     	}*/
     	SpringApplication.run(Jmart.class, args);
     }
-    public static boolean paymentTimekeeper (Payment payment) {
-    	long time = payment.history.get(payment.history.size()-1).date.getTime();
-    	if (payment.history.get(payment.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {
-    		if (time > WAITING_CONF_LIMIT_MS) {
-    			Payment.Record newer = payment.new Record(Status.FAILED,"gagal dikonfirmasi");
-    			payment.history.add(newer);
-    		}
-    	}
-    	if (payment.history.get(payment.history.size()-1).status == Invoice.Status.ON_PROGRESS) {
-    		if (time > ON_PROGRESS_LIMIT_MS) {
-    			Payment.Record newer = payment.new Record(Status.FAILED,"gagal diproses");
-    			payment.history.add(newer);
-    		}
-    	}
-    	if (payment.history.get(payment.history.size()-1).status == Invoice.Status.ON_DELIVERY) {
-    		if (time > ON_DELIVERY_LIMIT_MS) {
-    			Payment.Record newer = payment.new Record(Status.DELIVERED,"sudah diantar");
-    			payment.history.add(newer);
-    		}
-    	}
-    	if (payment.history.get(payment.history.size()-1).status == Invoice.Status.DELIVERED) {
-    		if (time > DELIVERED_LIMIT_MS) {
-    			Payment.Record newer = payment.new Record(Status.FINISHED,"sudah selesai");
-    			payment.history.add(newer);
-    		}
-    	}
-    	return true;
-    }
 	/*public static List<Product> read(String string) throws FileNotFoundException {
 		JsonReader readed = new JsonReader(new FileReader(string));
 		Product[] result = new Gson().fromJson(readed, Product[].class);
