@@ -15,7 +15,7 @@ public abstract class Invoice extends Serializable
         BAD,
         NEUTRAL,
         GOOD};
-    enum Status{
+    public enum Status{
         WAITING_CONFIRMATION,
         CANCELLED,
         ON_PROGRESS,
