@@ -72,10 +72,16 @@ public class AccountController implements BasicGetController<Account>
 		}
 		return found.store;
 	}
-	//@GetMapping("/account")
-	//boolean topUp (int id, double balance) {
-		
-	//}
+	@PostMapping("/account/{id}/topUp")
+	boolean topUp (int id, double balance) {
+		Account found = Algorithm.<Account>find(accountTable,prod -> prod.id == id);
+		if (found != null) {
+			found.balance += balance;
+			return true;
+		}else {
+			return false;
+		}
+	}
 	//@GetMapping
 	public JsonTable getJsonTable() {
 		return accountTable;
