@@ -1,4 +1,4 @@
-package com.MichaelHardityaJmartFA;
+package com.MichaelHardityaJmartFA.dbjson;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.Collections;

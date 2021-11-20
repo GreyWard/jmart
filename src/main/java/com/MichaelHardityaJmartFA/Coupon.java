@@ -1,5 +1,7 @@
 package com.MichaelHardityaJmartFA;
 
+import com.MichaelHardityaJmartFA.dbjson.Serializable;
+
 public class Coupon extends Serializable
 {
     public static enum Type{

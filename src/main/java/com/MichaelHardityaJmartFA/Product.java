@@ -1,5 +1,6 @@
 package com.MichaelHardityaJmartFA;
 
+import com.MichaelHardityaJmartFA.dbjson.Serializable;
 
 /**
  * Memuat data produk

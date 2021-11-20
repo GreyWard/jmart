@@ -1,4 +1,4 @@
-package com.MichaelHardityaJmartFA;
+package com.MichaelHardityaJmartFA.dbjson;
 
 import java.util.HashMap;
 

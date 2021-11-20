@@ -2,6 +2,9 @@ package com.MichaelHardityaJmartFA;
 /**menyimpan data complain
    *@author Michael Harditya*/
 import java.util.Date;
+
+import com.MichaelHardityaJmartFA.dbjson.Serializable;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 

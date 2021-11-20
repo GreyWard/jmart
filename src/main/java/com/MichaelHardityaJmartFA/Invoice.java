@@ -1,5 +1,7 @@
 package com.MichaelHardityaJmartFA;
 import java.util.Date;
+
+import com.MichaelHardityaJmartFA.dbjson.Serializable;
 /**
  * Write a description of class Invoice here.
  *
