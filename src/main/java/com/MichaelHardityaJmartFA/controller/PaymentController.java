@@ -20,7 +20,7 @@ public class PaymentController implements BasicGetController<Payment>
 	public JsonTable getJsonTable() {
 		return paymentTable;
 	}
-	public static boolean paymentTimekeeper (Payment payment) {
+	public static boolean timekeeper (Payment payment) {
     	long time = payment.history.get(payment.history.size()-1).date.getTime();
     	if (payment.history.get(payment.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {
     		if (time > WAITING_CONF_LIMIT_MS) {
