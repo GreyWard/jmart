@@ -2,16 +2,34 @@ package com.MichaelHardityaJmartFA.controller;
 
 
 import com.MichaelHardityaJmartFA.Account;
+import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
+import com.MichaelHardityaJmartFA.dbjson.JsonTable;
+import com.MichaelHardityaJmartFA.dbjson.Serializable;
+
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/account")
-public class AccountController 
+public class AccountController implements BasicGetController<Account>
 {
+	public static final String REGEX_EMAIL = "^(?!.)[A-Za-z0-9&_*~][A-Za-z0-9&_*~.]+@[^. -][-.A-Za-z0-9]+$";
+    public static final String REGEX_PASSWORD = "^(?! )(?=[A-Za-z0-9])[A-Za-z0-9]{8}$";
+	public static final Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
+	public static final Pattern REGEX_PATTERN_PASSWORD = Pattern.compile(REGEX_PASSWORD);
+    @JsonAutowired(filepath = "a/b/account.json", value = Account.class) 
+    public static JsonTable<Account> accountTable;
 	@GetMapping
 	String index() { return "account page"; }
-	
-	@PostMapping("/register")
+	//@PostMapping("/account/login")
+	//Account login (String email, String password) {
+		//accountTable = getJsonTable();
+		//accountTable.
+	//}
+	@PostMapping("/account/register")
 	Account register
 	(
 		@RequestParam String name,
@@ -19,9 +37,36 @@ public class AccountController
 		@RequestParam String password
 	)
 	{
+		Matcher mail = REGEX_PATTERN_EMAIL.matcher(email);
+        Matcher pass = REGEX_PATTERN_PASSWORD.matcher(password);
+		if (name.isBlank()) {
+			return null;
+		}
+		else if(mail.find() && pass.find()) {
 		return new Account(name, email, password, 0);
+		}
+		else {
+			return null;
+		}
 	}
-	
-	@GetMapping("/{id}")
-	String getById(@PathVariable int id) { return "account id " + id + " not found!"; }
+	@GetMapping("/account")
+	Account registerStore
+	(
+		@RequestParam int id,
+		@RequestParam String name,
+		@RequestParam String address,
+		@RequestParam String phoneNumber
+	)
+	{
+		return new Account(name, address, phoneNumber, 0);
+	}
+	//@GetMapping("/account")
+	//boolean topUp (int id, double balance) {
+		
+	//}
+	@GetMapping
+	public JsonTable getJsonTable() {
+		return accountTable;
+	}
+
 }
