@@ -1,13 +1,14 @@
 package com.MichaelHardityaJmartFA;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
-import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
+//import java.io.FileNotFoundException;
+//import java.io.FileReader;
+//import java.util.ArrayList;
+//import java.util.List;
+//import com.google.gson.*;
+//import com.google.gson.stream.JsonReader;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.MichaelHardityaJmartFA.Invoice.Status;
+//import com.MichaelHardityaJmartFA.Invoice.Status;
+import com.MichaelHardityaJmartFA.dbjson.JsonDBEngine;
 /**
  * a JMart Apps for managing a store
  * @author Michael Harditya
@@ -83,7 +84,9 @@ class Jmart
     	{
     		t.printStackTrace();
     	}*/
+    	JsonDBEngine.Run(Jmart.class);
     	SpringApplication.run(Jmart.class, args);
+    	Runtime.getRuntime().addShutdownHook(new Thread(() -> JsonDBEngine.join()));
     }
 	/*public static List<Product> read(String string) throws FileNotFoundException {
 		JsonReader readed = new JsonReader(new FileReader(string));
