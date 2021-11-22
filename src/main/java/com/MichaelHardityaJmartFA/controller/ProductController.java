@@ -1,11 +1,9 @@
 package com.MichaelHardityaJmartFA.controller;
 
-import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.MichaelHardityaJmartFA.Account;
@@ -14,17 +12,36 @@ import com.MichaelHardityaJmartFA.Product;
 import com.MichaelHardityaJmartFA.ProductCategory;
 import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
+
 @RestController
 public class ProductController implements BasicGetController<Product> {
 	 @JsonAutowired(filepath = "a/b/product.json", value = Product.class)
 	 public static JsonTable<Product> productTable;
 	 @PostMapping("/product/create")
-	 Product create(int accountId, String name, int weight, boolean conditionUsed, double price, double discount, ProductCategory category, byte shipmentPlans) {
-		 
-		 return null;
-	 }
+	 Product create
+	 (
+			 @RequestParam int accountId, 
+			 @RequestParam String name, 
+			 @RequestParam int weight, 
+			 @RequestParam boolean conditionUsed, 
+			 @RequestParam double price, 
+			 @RequestParam double discount, 
+			 @RequestParam ProductCategory category, 
+			 @RequestParam byte shipmentPlans
+	) 
+	{
+		 Account found = Algorithm.<Account>find(AccountController.accountTable,prod -> prod.id == accountId);
+		 if (found != null) {
+			 if (found.store != null) {
+				productTable.add(new Product(accountId, name, weight, conditionUsed, price, discount, category, shipmentPlans));
+				return new Product(accountId, name, weight, conditionUsed, price, discount, category, shipmentPlans);
+			 } else {
+				 return null;
+			 }
+		 }else {
+			 return null;
+		 }
+	}
 	 @GetMapping("/product/{id}/store")
 	 List<Product> getProductByStore(int id, int page, int pageSize){
 		try
