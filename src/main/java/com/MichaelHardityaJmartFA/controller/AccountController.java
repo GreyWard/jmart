@@ -31,7 +31,20 @@ public class AccountController implements BasicGetController<Account>
 	@PostMapping("/account/login")
 	Account login (String email, String password) {
 		Account found = Algorithm.<Account>find(accountTable,prod -> prod.email == email);
-		if (found.password == password) {
+		String generatedPass = null;
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(password.getBytes());
+			byte[] bytes = md.digest();
+			StringBuilder sb = new StringBuilder();
+			for(int i = 0; i < bytes.length; i++) {
+				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			generatedPass = sb.toString();
+		}catch(NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		if (found.password == generatedPass) {
 			return found;
 		}else {
 			return null;
@@ -64,7 +77,7 @@ public class AccountController implements BasicGetController<Account>
 			}catch(NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}
-		return new Account(name, email, generatedPass, 0);
+			return new Account(name, email, generatedPass, 0);
 		}
 		else {
 			return null;
