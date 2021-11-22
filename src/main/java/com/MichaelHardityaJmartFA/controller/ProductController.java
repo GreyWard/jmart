@@ -29,9 +29,7 @@ public class ProductController implements BasicGetController<Product> {
 	 List<Product> getProductByStore(int id, int page, int pageSize){
 		try
 		{
-			JsonReader readed = new JsonReader(new FileReader("a/b/product.json"));
-			Product[] result = new Gson().fromJson(readed, Product[].class);
-			List<Product> list = Algorithm.<Product>collect(result,prod -> prod.accountId == id);
+			List<Product> list = Algorithm.<Product>collect(productTable,prod -> prod.accountId == id);
 			return Algorithm.<Product>paginate(list,page,pageSize,pred -> true);
 		}catch(Exception e) {
 			e.printStackTrace();

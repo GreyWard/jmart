@@ -5,11 +5,8 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.MichaelHardityaJmartFA.Account;
 import com.MichaelHardityaJmartFA.Algorithm;
 import com.MichaelHardityaJmartFA.Coupon;
-import com.MichaelHardityaJmartFA.Payment;
-import com.MichaelHardityaJmartFA.Product;
 import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
 @RestController
@@ -37,9 +34,8 @@ public class CouponController implements BasicGetController<Coupon>
 	}
 	@GetMapping("getAvailable")
 	List<Coupon> getAvailable (int page, int pageSize){
-		//List<Product> list = Algorithm.<Product>collect(couponTable,prod -> true);
-		//return Algorithm.<Product>paginate(couponTable,page,pageSize,pred -> true);
-	return null;
+		List<Coupon> list = Algorithm.<Coupon>collect(couponTable,prod -> prod.isUsed() == false);
+		return Algorithm.<Coupon>paginate(list,page,pageSize,pred -> true);
 	}
 	@Override
 	public JsonTable<Coupon> getJsonTable() {
