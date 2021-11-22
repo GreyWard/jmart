@@ -14,7 +14,7 @@ public class CouponController implements BasicGetController<Coupon>
 {
 	@JsonAutowired(filepath = "a/b/coupon.json", value = Coupon.class)
 	 public static JsonTable<Coupon> couponTable;
-	@GetMapping("/{id}/isUsed")
+	@GetMapping("/coupon/{id}/isUsed")
 	boolean isUsed (int id) {
 		Coupon found = Algorithm.<Coupon>find(couponTable,prod -> prod.id == id);
 		if (found != null) {
@@ -23,7 +23,7 @@ public class CouponController implements BasicGetController<Coupon>
 			return false;
 		}
 	}
-	@GetMapping("/{id}/canApply")
+	@GetMapping("/coupon/{id}/canApply")
 	boolean canApply (int id, double price, double discount) {
 		Coupon found = Algorithm.<Coupon>find(couponTable,prod -> prod.id == id);
 		if (found != null) {
@@ -32,7 +32,7 @@ public class CouponController implements BasicGetController<Coupon>
 			return false;
 		}
 	}
-	@GetMapping("getAvailable")
+	@GetMapping("/coupon/getAvailable")
 	List<Coupon> getAvailable (int page, int pageSize){
 		List<Coupon> list = Algorithm.<Coupon>collect(couponTable,prod -> prod.isUsed() == false);
 		return Algorithm.<Coupon>paginate(list,page,pageSize,pred -> true);
