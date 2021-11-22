@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/account")
 public class AccountController implements BasicGetController<Account>
 {
 	public static final String REGEX_EMAIL = "^(?!.)[A-Za-z0-9&_*~][A-Za-z0-9&_*~.]+@[^. -][-.A-Za-z0-9]+$";
