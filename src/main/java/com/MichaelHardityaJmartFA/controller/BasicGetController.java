@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.MichaelHardityaJmartFA.*;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
 import com.MichaelHardityaJmartFA.dbjson.Serializable;
 

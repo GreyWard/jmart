@@ -3,12 +3,10 @@ package com.MichaelHardityaJmartFA.controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.MichaelHardityaJmartFA.Account;
 import com.MichaelHardityaJmartFA.Invoice;
 import com.MichaelHardityaJmartFA.Payment;
 import com.MichaelHardityaJmartFA.Invoice.Status;
 import com.MichaelHardityaJmartFA.ObjectPoolThread;
-import com.MichaelHardityaJmartFA.Payment.Record;
 import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
 
@@ -35,7 +33,7 @@ public class PaymentController implements BasicGetController<Payment>
 	boolean submit(@RequestParam int id) {
 		return false;
 	}
-	public JsonTable getJsonTable() {
+	public JsonTable<Payment> getJsonTable() {
 		return paymentTable;
 	}
 	//not yet done

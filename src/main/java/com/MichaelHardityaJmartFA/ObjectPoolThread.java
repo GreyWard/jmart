@@ -11,7 +11,9 @@ public class ObjectPoolThread<T> extends Thread {
 		this.routine = routine;
 	}
 	public ObjectPoolThread(Function<T,Boolean> routine) {
-
+		Thread thread = new Thread();
+		thread.start();
+		this.routine = routine;
 	}
 	public synchronized void add (T object) {
 		objectPool.add(object);

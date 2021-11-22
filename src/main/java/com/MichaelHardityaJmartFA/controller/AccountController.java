@@ -83,7 +83,7 @@ public class AccountController implements BasicGetController<Account>
 		}
 	}
 	//@GetMapping
-	public JsonTable getJsonTable() {
+	public JsonTable<Account> getJsonTable() {
 		return accountTable;
 	}
 
