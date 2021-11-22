@@ -8,6 +8,8 @@ import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
 //import com.MichaelHardityaJmartFA.dbjson.Serializable;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 //import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,7 +51,20 @@ public class AccountController implements BasicGetController<Account>
 			return null;
 		}
 		else if(mail.find() && pass.find()) {
-		return new Account(name, email, password, 0);
+			String generatedPass = null;
+			try {
+				MessageDigest md = MessageDigest.getInstance("MD5");
+				md.update(password.getBytes());
+				byte[] bytes = md.digest();
+				StringBuilder sb = new StringBuilder();
+				for(int i = 0; i < bytes.length; i++) {
+					sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+				}
+				generatedPass = sb.toString();
+			}catch(NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+		return new Account(name, email, generatedPass, 0);
 		}
 		else {
 			return null;
