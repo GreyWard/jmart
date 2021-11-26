@@ -3,6 +3,7 @@ package com.MichaelHardityaJmartFA.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.MichaelHardityaJmartFA.Algorithm;
@@ -15,7 +16,7 @@ public class CouponController implements BasicGetController<Coupon>
 	@JsonAutowired(filepath = "a/b/coupon.json", value = Coupon.class)
 	 public static JsonTable<Coupon> couponTable;
 	@GetMapping("/coupon/{id}/isUsed")
-	boolean isUsed (int id) {
+	boolean isUsed (@PathVariable int id) {
 		Coupon found = Algorithm.<Coupon>find(couponTable,prod -> prod.id == id);
 		if (found != null) {
 			return found.isUsed();
@@ -24,7 +25,7 @@ public class CouponController implements BasicGetController<Coupon>
 		}
 	}
 	@GetMapping("/coupon/{id}/canApply")
-	boolean canApply (int id, double price, double discount) {
+	boolean canApply (@PathVariable int id, double price, double discount) {
 		Coupon found = Algorithm.<Coupon>find(couponTable,prod -> prod.id == id);
 		if (found != null) {
 			return found.canApply(price,discount);

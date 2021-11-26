@@ -52,9 +52,9 @@ public class AccountController implements BasicGetController<Account>
 	@PostMapping("/account/register")
 	Account register
 	(
-		@RequestParam String name,
-		@RequestParam String email,
-		@RequestParam String password
+		String name,
+		String email,
+		String password
 	)
 	{
 		Matcher mail = REGEX_PATTERN_EMAIL.matcher(email);
@@ -85,10 +85,10 @@ public class AccountController implements BasicGetController<Account>
 	@PostMapping("/account/{id}/registerStore")
 	Store registerStore
 	(
-		@RequestParam int id,
-		@RequestParam String name,
-		@RequestParam String address,
-		@RequestParam String phoneNumber
+		@PathVariable int id,
+		String name,
+		String address,
+		String phoneNumber
 	)
 	{
 		Account found = Algorithm.<Account>find(accountTable,prod -> prod.id == id);
@@ -100,7 +100,7 @@ public class AccountController implements BasicGetController<Account>
 		return found.store;
 	}
 	@PostMapping("/account/{id}/topUp")
-	boolean topUp (int id, double balance) {
+	boolean topUp (@PathVariable int id, double balance) {
 		Account found = Algorithm.<Account>find(accountTable,prod -> prod.id == id);
 		if (found != null) {
 			found.balance += balance;

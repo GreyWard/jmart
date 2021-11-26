@@ -1,5 +1,6 @@
 package com.MichaelHardityaJmartFA.controller;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,7 +24,7 @@ public class PaymentController implements BasicGetController<Payment>
 	@JsonAutowired(filepath = "a/b/payment.json", value = Payment.class) 
     public static JsonTable<Payment> paymentTable;
 	ObjectPoolThread<Payment> poolThread = new ObjectPoolThread<Payment>("Thread-PP",PaymentController::timekeeper);
-	@PostMapping("/payment/{id}/create")
+	@PostMapping("/payment/create")
 	Payment create (int buyerId,int productId, int productCount, String shipmentAddress, byte shipmentPlan) {
 		Account foundAcc = Algorithm.<Account>find(AccountController.accountTable,prod -> prod.id == buyerId);
 		Product foundProd = Algorithm.<Product>find(ProductController.productTable,pred -> pred.id == productId);
@@ -47,7 +48,7 @@ public class PaymentController implements BasicGetController<Payment>
 		}
 	}
 	@PostMapping("/payment/{id}/accept")
-	boolean accept(@RequestParam int id)
+	boolean accept(@PathVariable int id)
 	{
 		Payment found = Algorithm.<Payment>find(paymentTable,prod -> prod.id == id);
 		if (found != null && found.history.get(found.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {
@@ -59,7 +60,7 @@ public class PaymentController implements BasicGetController<Payment>
 		}
 	}
 	@PostMapping("/payment/{id}/cancel")
-	boolean cancel(@RequestParam int id) {
+	boolean cancel(@PathVariable int id) {
 		Payment found = Algorithm.<Payment>find(paymentTable,prod -> prod.id == id);
 		if (found != null && found.history.get(found.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {
 			Payment.Record newer = found.new Record(Status.CANCELLED,"Pesanan diterima");
@@ -70,7 +71,7 @@ public class PaymentController implements BasicGetController<Payment>
 		}
 	}
 	@PostMapping("/payment/{id}/submit")
-	boolean submit(@RequestParam int id, 
+	boolean submit(@PathVariable int id, 
 				   @RequestParam String receipt) {
 		Payment found = Algorithm.<Payment>find(paymentTable,prod -> prod.id == id);
 		if (found != null && found.history.get(found.history.size()-1).status == Invoice.Status.ON_PROGRESS) {

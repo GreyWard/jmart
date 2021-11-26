@@ -2,6 +2,7 @@ package com.MichaelHardityaJmartFA.controller;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,13 +21,13 @@ public class ProductController implements BasicGetController<Product> {
 	 @PostMapping("/product/create")
 	 Product create
 	 (
-			 @RequestParam int accountId, 
-			 @RequestParam String name, 
-			 @RequestParam int weight, 
-			 @RequestParam boolean conditionUsed, 
-			 @RequestParam double price, 
-			 @RequestParam double discount, 
-			 @RequestParam ProductCategory category, 
+			 int accountId, 
+			 String name, 
+			 int weight, 
+			 boolean conditionUsed, 
+			 double price, 
+			 double discount, 
+			 ProductCategory category, 
 			 @RequestParam byte shipmentPlans
 	) 
 	{
@@ -43,7 +44,7 @@ public class ProductController implements BasicGetController<Product> {
 		 }
 	}
 	 @GetMapping("/product/{id}/store")
-	 List<Product> getProductByStore(int id, int page, int pageSize){
+	 List<Product> getProductByStore(@PathVariable int id, int page, int pageSize){
 		try
 		{
 			List<Product> list = Algorithm.<Product>collect(productTable,prod -> prod.accountId == id);
