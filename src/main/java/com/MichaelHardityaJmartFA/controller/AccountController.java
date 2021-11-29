@@ -50,16 +50,6 @@ public class AccountController implements BasicGetController<Account>
         return null;
 		}
 	}
-//	@RequestMapping(value="/login", method=RequestMethod.POST)
-//    Account login
-//    (
-//        @RequestParam String email,
-//        @RequestParam String password
-//    )
-//    {
-//        Account acc = Algorithm.<Account>find(accountTable, obj -> obj.email.equals(email));
-//        return acc != null && acc.password.equals(password) ? acc : null;
-//    }
 	@PostMapping("/register")
 	Account register
 	(
