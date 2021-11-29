@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,19 +16,20 @@ import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
 
 @RestController
+@RequestMapping("/product")
 public class ProductController implements BasicGetController<Product> {
 	 @JsonAutowired(filepath = "a/b/product.json", value = Product.class)
 	 public static JsonTable<Product> productTable;
-	 @PostMapping("/product/create")
+	 @PostMapping("/create")
 	 Product create
 	 (
-			 int accountId, 
-			 String name, 
-			 int weight, 
-			 boolean conditionUsed, 
-			 double price, 
-			 double discount, 
-			 ProductCategory category, 
+			 @RequestParam int accountId, 
+			 @RequestParam String name, 
+			 @RequestParam int weight, 
+			 @RequestParam boolean conditionUsed, 
+			 @RequestParam double price, 
+			 @RequestParam double discount, 
+			 @RequestParam ProductCategory category, 
 			 @RequestParam byte shipmentPlans
 	) 
 	{
@@ -43,8 +45,8 @@ public class ProductController implements BasicGetController<Product> {
 			 return null;
 		 }
 	}
-	 @GetMapping("/product/{id}/store")
-	 List<Product> getProductByStore(@PathVariable int id, int page, int pageSize){
+	 @GetMapping("/{id}/store")
+	 List<Product> getProductByStore(@PathVariable int id, @RequestParam int page, @RequestParam int pageSize){
 		try
 		{
 			List<Product> list = Algorithm.<Product>collect(productTable,prod -> prod.accountId == id);
@@ -54,11 +56,17 @@ public class ProductController implements BasicGetController<Product> {
 			return null;
 		}
 	 }
-	 @GetMapping("/product/getFiltered")
-	 List<Product> getProductFiltered(int page, int pageSize, int accountId, String search, int minPrice, int maxPrice, ProductCategory category){
+	 @GetMapping("/getFiltered")
+	 List<Product> getProductFiltered(@RequestParam int page, 
+			 @RequestParam int pageSize, 
+			 @RequestParam int accountId, 
+			 @RequestParam String search, 
+			 @RequestParam int minPrice, 
+			 @RequestParam int maxPrice, 
+			 @RequestParam ProductCategory category){
 		 return null;
 	 }
-	@Override
+
 	public JsonTable<Product> getJsonTable() {
 		return productTable;
 	}

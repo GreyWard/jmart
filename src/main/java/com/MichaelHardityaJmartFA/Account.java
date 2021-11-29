@@ -10,11 +10,10 @@ public class Account extends Serializable
     public String password;
     public Store store;
     public double balance;
-    public static final String REGEX_EMAIL = "^(?!.)[A-Za-z0-9&_*~][A-Za-z0-9&_*~.]+@[^. -][-.A-Za-z0-9]+$";
-    public static final String REGEX_PASSWORD = "^(?! )(?=[A-Za-z0-9])[A-Za-z0-9]{8}$";
+    public static final String REGEX_EMAIL = "^[A-Za-z0-9&_*~]+(?:\\\\.[A-Za-z0-9&_*~]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?$";
+    public static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)[a-zA-Z\\\\d]{8,}$";
     public Account(String name,String email,String password, double balance)
     {
-    	this.balance = balance;
         this.name = name;
         this.email = email;
         this.password = password;

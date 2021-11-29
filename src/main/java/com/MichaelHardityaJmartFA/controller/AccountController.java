@@ -17,19 +17,20 @@ import java.util.regex.Pattern;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/account")
 public class AccountController implements BasicGetController<Account>
 {
-	public static final String REGEX_EMAIL = "^(?!.)[A-Za-z0-9&_*~][A-Za-z0-9&_*~.]+@[^. -][-.A-Za-z0-9]+$";
-    public static final String REGEX_PASSWORD = "^(?! )(?=[A-Za-z0-9])[A-Za-z0-9]{8}$";
+	public static final String REGEX_EMAIL = "^[A-Za-z0-9&_*~]+(?:\\.[A-Za-z0-9&_*~]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?$";
+    public static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
 	public static final Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
 	public static final Pattern REGEX_PATTERN_PASSWORD = Pattern.compile(REGEX_PASSWORD);
     @JsonAutowired(filepath = "a/b/account.json", value = Account.class) 
     public static JsonTable<Account> accountTable;
 	@GetMapping
 	String index() { return "account page"; }
-	@PostMapping("/account/login")
-	Account login (String email, String password) {
-		Account found = Algorithm.<Account>find(accountTable,prod -> prod.email == email);
+	@PostMapping("/login")
+	Account login (@RequestParam String email, @RequestParam String password) {
+		Account found = Algorithm.<Account>find(accountTable,prod -> prod.email.equals(email));
 		String generatedPass = null;
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
@@ -43,18 +44,28 @@ public class AccountController implements BasicGetController<Account>
 		}catch(NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		if (found.password == generatedPass) {
+		if (found != null && found.password.equals(generatedPass)) {
 			return found;
 		}else {
-			return null;
+        return null;
 		}
 	}
-	@PostMapping("/account/register")
+//	@RequestMapping(value="/login", method=RequestMethod.POST)
+//    Account login
+//    (
+//        @RequestParam String email,
+//        @RequestParam String password
+//    )
+//    {
+//        Account acc = Algorithm.<Account>find(accountTable, obj -> obj.email.equals(email));
+//        return acc != null && acc.password.equals(password) ? acc : null;
+//    }
+	@PostMapping("/register")
 	Account register
 	(
-		String name,
-		String email,
-		String password
+			@RequestParam String name,
+			@RequestParam String email,
+			@RequestParam String password
 	)
 	{
 		Matcher mail = REGEX_PATTERN_EMAIL.matcher(email);
@@ -76,19 +87,21 @@ public class AccountController implements BasicGetController<Account>
 			}catch(NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}
-			return new Account(name, email, generatedPass, 0);
+			Account made = new Account(name, email, generatedPass, 0);
+			accountTable.add(made);
+			return made;
 		}
 		else {
 			return null;
 		}
 	}
-	@PostMapping("/account/{id}/registerStore")
+	@PostMapping("/{id}/registerStore")
 	Store registerStore
 	(
 		@PathVariable int id,
-		String name,
-		String address,
-		String phoneNumber
+		@RequestParam String name,
+		@RequestParam String address,
+		@RequestParam String phoneNumber
 	)
 	{
 		Account found = Algorithm.<Account>find(accountTable,prod -> prod.id == id);
@@ -99,8 +112,8 @@ public class AccountController implements BasicGetController<Account>
 		}
 		return found.store;
 	}
-	@PostMapping("/account/{id}/topUp")
-	boolean topUp (@PathVariable int id, double balance) {
+	@PostMapping("/{id}/topUp")
+	boolean topUp (@PathVariable int id, @RequestParam double balance) {
 		Account found = Algorithm.<Account>find(accountTable,prod -> prod.id == id);
 		if (found != null) {
 			found.balance += balance;
