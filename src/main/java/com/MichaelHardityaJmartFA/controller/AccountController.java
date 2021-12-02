@@ -15,7 +15,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.web.bind.annotation.*;
-
+/**
+ * Controls Account data types
+ * @author Michael Harditya
+ *
+ */
 @RestController
 @RequestMapping("/account")
 public class AccountController implements BasicGetController<Account>
@@ -28,6 +32,12 @@ public class AccountController implements BasicGetController<Account>
     public static JsonTable<Account> accountTable;
 	@GetMapping
 	String index() { return "account page"; }
+	/**
+	 * used to login from frontend
+	 * @param email user input email
+	 * @param password user input password
+	 * @return the account itself if succeed, null if failed
+	 */
 	@PostMapping("/login")
 	Account login (@RequestParam String email, @RequestParam String password) {
 		Account found = Algorithm.<Account>find(accountTable,prod -> prod.email.equals(email));
@@ -50,6 +60,13 @@ public class AccountController implements BasicGetController<Account>
         return null;
 		}
 	}
+	/**
+	 * used to register new Account (next update, reject if the email is already exists)
+	 * @param name user input name
+	 * @param email user input email, succeed when the email is in correct regex
+	 * @param password user input password, succeed when the password is in correct regex
+	 * @return the account itself if succeed, null if failed
+	 */
 	@PostMapping("/register")
 	Account register
 	(
@@ -85,6 +102,14 @@ public class AccountController implements BasicGetController<Account>
 			return null;
 		}
 	}
+	/**
+	 * used to register a Store in the Account, only if it doesn't have a Store yet
+	 * @param id user ID, generated automatically for every account
+	 * @param name username, taken from the user Account
+	 * @param address the address details from the user Account
+	 * @param phoneNumber the phone number of the Store
+	 * @return the Account Store data
+	 */
 	@PostMapping("/{id}/registerStore")
 	Store registerStore
 	(
@@ -102,6 +127,12 @@ public class AccountController implements BasicGetController<Account>
 		}
 		return found.store;
 	}
+	/**
+	 * used to add balance into the Account
+	 * @param id user ID, generated automatically for every account
+	 * @param balance user balance, decrease when used, increase in topUps
+	 * @return true if succeed, false if failed
+	 */
 	@PostMapping("/{id}/topUp")
 	boolean topUp (@PathVariable int id, @RequestParam double balance) {
 		Account found = Algorithm.<Account>find(accountTable,prod -> prod.id == id);

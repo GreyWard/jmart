@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import com.MichaelHardityaJmartFA.Invoice.Status;
 import com.MichaelHardityaJmartFA.dbjson.JsonDBEngine;
 /**
- * a JMart Apps for managing a store
+ * This class runs the Spring Framework for backend purposes
  * @author Michael Harditya
  * @version 0.0.1
  */
