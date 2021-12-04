@@ -121,9 +121,7 @@ public class AccountController implements BasicGetController<Account>
 	{
 		Account found = Algorithm.<Account>find(accountTable,prod -> prod.id == id);
 		if (found.store == null) {
-			found.store.address = address;
-			found.store.phoneNumber = phoneNumber;
-			found.store.name = name;
+			found.store = new Store(name,address,phoneNumber,0);
 		}
 		return found.store;
 	}

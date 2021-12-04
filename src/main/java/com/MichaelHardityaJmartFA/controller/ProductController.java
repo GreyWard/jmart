@@ -59,12 +59,46 @@ public class ProductController implements BasicGetController<Product> {
 	 @GetMapping("/getFiltered")
 	 List<Product> getProductFiltered(@RequestParam int page, 
 			 @RequestParam int pageSize, 
-			 @RequestParam int accountId, 
+			 @RequestParam boolean conditionUsed, 
+			 @RequestParam boolean conditionNew,
 			 @RequestParam String search, 
 			 @RequestParam int minPrice, 
 			 @RequestParam int maxPrice, 
 			 @RequestParam ProductCategory category){
-		 return null;
+		 try
+		 {
+			 List<Product> filterPrice = null;
+			 if (minPrice != 0 && maxPrice != 0) {
+				 filterPrice = Algorithm.<Product>collect(productTable,prod -> prod.price >= minPrice && prod.price <= maxPrice); 
+			 }else {
+				 filterPrice = Algorithm.<Product>collect(productTable,prod -> true);
+			 }
+			 /*List<Product> filterName = null;
+			 if(search != null) {
+				 filterName = Algorithm.<Product>collect(filterPrice,prod -> prod.name.contains(search));
+			 }else {
+				 filterName = Algorithm.<Product>collect(filterPrice, prod -> true);
+			 }*/
+			 List<Product> filterCategory = null;
+			 if(category != ProductCategory.ALL) {
+				 filterCategory = Algorithm.<Product>collect(filterPrice,prod -> prod.category == category);
+			 }else {
+				 filterCategory = Algorithm.<Product>collect(filterPrice,prod -> true);
+			 }
+			 List<Product> filterCondition = null;
+			 if(conditionUsed == true && conditionNew == false) {
+				 filterCondition = Algorithm.<Product>collect(filterCategory,prod -> prod.conditionUsed == true);
+			 }else if(conditionUsed == false && conditionNew == true) {
+				 filterCondition = Algorithm.<Product>collect(filterCategory,prod -> prod.conditionUsed == false);
+			 }else {
+				 filterCondition = Algorithm.<Product>collect(filterCategory,prod -> true);
+			 }
+			 List<Product> paginated = Algorithm.<Product>paginate(productTable, page, pageSize, prod -> true);
+			 return productTable;
+		 }catch(Exception e){
+			 e.printStackTrace();
+			 return null;
+		 }
 	 }
 
 	public JsonTable<Product> getJsonTable() {

@@ -24,5 +24,6 @@ public enum ProductCategory
 	STATIONERY,
 	TOYS,
 	TRAVEL,
-	WEDDING
+	WEDDING,
+	ALL
 }

@@ -41,6 +41,6 @@ public class Product extends Serializable
         this.shipmentPlans = shipmentPlans;
     }
     public String toString(){
-        return ("Name: "+name+"\nWeight: "+weight+"\nconditionUsed: "+conditionUsed+"\nprice: "+price+"\ndiscount: "+discount+"\ncategory: "+category+"\naccountId: "+accountId);
+        return (name);
     }
 }

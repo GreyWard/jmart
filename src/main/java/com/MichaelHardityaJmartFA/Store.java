@@ -9,7 +9,7 @@ public class Store
     public String address;
     public String phoneNumber;
     public double balance;
-    public Store(int accountId,String name,String address,String phoneNumber,double balance)
+    public Store(String name,String address,String phoneNumber,double balance)
     {
         this.name = name;
         this.address = address;
