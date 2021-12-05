@@ -12,6 +12,8 @@ import com.MichaelHardityaJmartFA.Account;
 import com.MichaelHardityaJmartFA.Algorithm;
 import com.MichaelHardityaJmartFA.Product;
 import com.MichaelHardityaJmartFA.ProductCategory;
+import com.MichaelHardityaJmartFA.Shipment;
+import com.MichaelHardityaJmartFA.Shipment.Plan;
 import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
 
@@ -30,14 +32,30 @@ public class ProductController implements BasicGetController<Product> {
 			 @RequestParam double price, 
 			 @RequestParam double discount, 
 			 @RequestParam ProductCategory category, 
-			 @RequestParam byte shipmentPlans
+			 @RequestParam String shipmentPlans
 	) 
 	{
 		 Account found = Algorithm.<Account>find(AccountController.accountTable,prod -> prod.id == accountId);
 		 if (found != null) {
 			 if (found.store != null) {
-				productTable.add(new Product(accountId, name, weight, conditionUsed, price, discount, category, shipmentPlans));
-				return new Product(accountId, name, weight, conditionUsed, price, discount, category, shipmentPlans);
+				 byte plan = 0;
+				 if (shipmentPlans.contentEquals("INSTANT")) {
+					 plan = Shipment.INSTANT.bit;
+				 }
+				 else if (shipmentPlans.contentEquals("SAME DAY")) {
+					 plan = Shipment.SAME_DAY.bit;
+				 }
+				 else if (shipmentPlans.contentEquals("NEXT DAY")) {
+					 plan = Shipment.NEXT_DAY.bit;
+				 }
+				 else if (shipmentPlans.contentEquals("REGULER")) {
+					 plan = Shipment.REGULER.bit;
+				 }
+				 else if (shipmentPlans.contentEquals("KARGO")) {
+					 plan = Shipment.KARGO.bit;
+				 }
+				productTable.add(new Product(accountId, name, weight, conditionUsed, price, discount, category, plan));
+				return new Product(accountId, name, weight, conditionUsed, price, discount, category, plan);
 			 } else {
 				 return null;
 			 }
@@ -62,8 +80,8 @@ public class ProductController implements BasicGetController<Product> {
 			 @RequestParam boolean conditionUsed, 
 			 @RequestParam boolean conditionNew,
 			 @RequestParam String search, 
-			 @RequestParam int minPrice, 
-			 @RequestParam int maxPrice, 
+			 @RequestParam double minPrice, 
+			 @RequestParam double maxPrice, 
 			 @RequestParam ProductCategory category){
 		 try
 		 {
@@ -73,17 +91,17 @@ public class ProductController implements BasicGetController<Product> {
 			 }else {
 				 filterPrice = Algorithm.<Product>collect(productTable,prod -> true);
 			 }
-			 /*List<Product> filterName = null;
-			 if(search != null) {
+			 List<Product> filterName = null;
+			 if(search != "") {
 				 filterName = Algorithm.<Product>collect(filterPrice,prod -> prod.name.contains(search));
 			 }else {
 				 filterName = Algorithm.<Product>collect(filterPrice, prod -> true);
-			 }*/
+			 }
 			 List<Product> filterCategory = null;
 			 if(category != ProductCategory.ALL) {
-				 filterCategory = Algorithm.<Product>collect(filterPrice,prod -> prod.category == category);
+				 filterCategory = Algorithm.<Product>collect(filterName,prod -> prod.category == category);
 			 }else {
-				 filterCategory = Algorithm.<Product>collect(filterPrice,prod -> true);
+				 filterCategory = Algorithm.<Product>collect(filterName,prod -> true);
 			 }
 			 List<Product> filterCondition = null;
 			 if(conditionUsed == true && conditionNew == false) {
@@ -93,14 +111,14 @@ public class ProductController implements BasicGetController<Product> {
 			 }else {
 				 filterCondition = Algorithm.<Product>collect(filterCategory,prod -> true);
 			 }
-			 List<Product> paginated = Algorithm.<Product>paginate(productTable, page, pageSize, prod -> true);
-			 return productTable;
+			 List<Product> paginated = Algorithm.<Product>paginate(filterCondition, page, pageSize, prod -> true);
+			 return paginated;
 		 }catch(Exception e){
 			 e.printStackTrace();
 			 return null;
 		 }
 	 }
-
+	 @GetMapping("/all")
 	public JsonTable<Product> getJsonTable() {
 		return productTable;
 	}

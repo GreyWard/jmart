@@ -122,8 +122,10 @@ public class AccountController implements BasicGetController<Account>
 		Account found = Algorithm.<Account>find(accountTable,prod -> prod.id == id);
 		if (found.store == null) {
 			found.store = new Store(name,address,phoneNumber,0);
+			return found.store;
+		}else {
+			return null;
 		}
-		return found.store;
 	}
 	/**
 	 * used to add balance into the Account
@@ -141,7 +143,7 @@ public class AccountController implements BasicGetController<Account>
 			return false;
 		}
 	}
-
+	@PostMapping("/all")
 	public JsonTable<Account> getJsonTable() {
 		return accountTable;
 	}
