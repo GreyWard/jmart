@@ -1,5 +1,7 @@
 package com.MichaelHardityaJmartFA.controller;
 
+import java.util.Date;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,7 +45,7 @@ public class PaymentController implements BasicGetController<Payment>
 		if (foundAcc != null && foundProd != null) {
 			Shipment createShip = new Shipment(shipmentAddress, 0, shipmentPlan, null);
 			Payment createPay = new Payment(buyerId, productId, productCount, createShip);
-			double price = createPay.getTotalPay(foundProd)*productCount;
+			double price = createPay.getTotalPay(foundProd);
 			double balance = foundAcc.balance;
 			if ((balance-price)>0) {
 				foundAcc.balance -= price;
@@ -63,8 +65,10 @@ public class PaymentController implements BasicGetController<Payment>
 	boolean accept(@PathVariable int id)
 	{
 		Payment found = Algorithm.<Payment>find(paymentTable,prod -> prod.id == id);
+		poolThread.add(found);
 		if (found != null && found.history.get(found.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {
-			Payment.Record newer = found.new Record(Status.ON_PROGRESS,"Pesanan diterima");
+			Payment.Record newer = found.new Record(Status.ON_PROGRESS,"Pesanan sedang dikerjakan");
+			found.status = Status.ON_PROGRESS;
 			found.history.add(newer);
 			return true;
 		}else {
@@ -74,8 +78,10 @@ public class PaymentController implements BasicGetController<Payment>
 	@PostMapping("/{id}/cancel")
 	boolean cancel(@PathVariable int id) {
 		Payment found = Algorithm.<Payment>find(paymentTable,prod -> prod.id == id);
+		poolThread.add(found);
 		if (found != null && found.history.get(found.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {
-			Payment.Record newer = found.new Record(Status.CANCELLED,"Pesanan diterima");
+			Payment.Record newer = found.new Record(Status.CANCELLED,"Pesanan dibatalkan");
+			found.status = Status.CANCELLED;
 			found.history.add(newer);
 			return true;
 		}else {
@@ -86,13 +92,15 @@ public class PaymentController implements BasicGetController<Payment>
 	boolean submit(@PathVariable int id, 
 				   @RequestParam String receipt) {
 		Payment found = Algorithm.<Payment>find(paymentTable,prod -> prod.id == id);
+		poolThread.add(found);
 		if (found != null && found.history.get(found.history.size()-1).status == Invoice.Status.ON_PROGRESS) {
 			if (receipt.isBlank()) {
 				return false;
 			}else {
 				found.shipment.receipt = receipt;
-				Payment.Record newer = found.new Record(Status.ON_PROGRESS,"Pesanan diterima");
+				Payment.Record newer = found.new Record(Status.ON_DELIVERY,"Pesanan dikirim");
 				found.history.add(newer);
+				found.status = Status.ON_DELIVERY;
 				return true;
 			}
 		}else {
@@ -105,7 +113,8 @@ public class PaymentController implements BasicGetController<Payment>
 	}
 
 	public static boolean timekeeper (Payment payment) {
-    	long time = payment.history.get(payment.history.size()-1).date.getTime();
+		long now = new Date().getTime();
+    	long time = now - payment.history.get(payment.history.size()-1).date.getTime();
     	if (payment.history.get(payment.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {
     		if (time > WAITING_CONF_LIMIT_MS) {
     			Payment.Record newer = payment.new Record(Status.FAILED,"gagal dikonfirmasi");

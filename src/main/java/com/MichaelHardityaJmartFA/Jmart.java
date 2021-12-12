@@ -56,7 +56,10 @@ class Jmart
 		}
 		return filteredList;
 	}*/
-	
+	/**
+	 * Runs the Jmart Backend on Spring Framework
+	 * @param args
+	 */
     public static void main(String[] args){
     	/*try
     	{

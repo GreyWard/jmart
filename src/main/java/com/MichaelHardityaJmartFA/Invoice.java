@@ -3,10 +3,9 @@ import java.util.Date;
 
 import com.MichaelHardityaJmartFA.dbjson.Serializable;
 /**
- * Write a description of class Invoice here.
+ * Class to Record Payment and status of a purchase
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Michael Harditya
  */
 public abstract class Invoice extends Serializable
 {
@@ -31,7 +30,9 @@ public abstract class Invoice extends Serializable
     public Rating rating;
     public Status status;
     /**
-     * Constructor for objects of class Invoice
+     * Initiate a new Invoice
+     * @param buyerId An Account ID of the purchaser
+     * @param productId A Product ID purchased
      */
     
     public Invoice(int buyerId, int productId)
