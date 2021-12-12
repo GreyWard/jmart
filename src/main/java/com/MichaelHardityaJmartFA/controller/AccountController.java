@@ -4,6 +4,7 @@ package com.MichaelHardityaJmartFA.controller;
 import com.MichaelHardityaJmartFA.Account;
 import com.MichaelHardityaJmartFA.Algorithm;
 import com.MichaelHardityaJmartFA.Store;
+import com.MichaelHardityaJmartFA.TopUp;
 import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
 //import com.MichaelHardityaJmartFA.dbjson.Serializable;
@@ -130,20 +131,20 @@ public class AccountController implements BasicGetController<Account>
 	/**
 	 * used to add balance into the Account
 	 * @param id user ID, generated automatically for every account
-	 * @param balance user balance, decrease when used, increase in topUps
+	 * @param couponCode a string of coupon code
 	 * @return true if succeed, false if failed
 	 */
 	@PostMapping("/{id}/topUp")
-	boolean topUp (@PathVariable int id, @RequestParam double balance) {
+	TopUp topUp (@PathVariable int id, @RequestParam String couponCode) {
 		Account found = Algorithm.<Account>find(accountTable,prod -> prod.id == id);
-		if (found != null) {
-			found.balance += balance;
-			return true;
+		TopUp topUps = Algorithm.<TopUp>find(TopUpController.topupTable,pred -> pred.couponCode.contentEquals(couponCode));
+		if (found != null && topUps != null) {
+			found.balance += topUps.balance;
+			return topUps;
 		}else {
-			return false;
+			return null;
 		}
 	}
-	@PostMapping("/all")
 	public JsonTable<Account> getJsonTable() {
 		return accountTable;
 	}

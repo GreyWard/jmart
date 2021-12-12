@@ -13,7 +13,6 @@ import com.MichaelHardityaJmartFA.Algorithm;
 import com.MichaelHardityaJmartFA.Product;
 import com.MichaelHardityaJmartFA.ProductCategory;
 import com.MichaelHardityaJmartFA.Shipment;
-import com.MichaelHardityaJmartFA.Shipment.Plan;
 import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
 

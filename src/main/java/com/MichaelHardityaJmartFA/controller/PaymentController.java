@@ -1,5 +1,6 @@
 package com.MichaelHardityaJmartFA.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,11 @@ public class PaymentController implements BasicGetController<Payment>
 	protected static long WAITING_CONF_LIMIT_MS = 30000;
 	@JsonAutowired(filepath = "a/b/payment.json", value = Payment.class) 
     public static JsonTable<Payment> paymentTable;
-	ObjectPoolThread<Payment> poolThread = new ObjectPoolThread<Payment>("Thread-PP",PaymentController::timekeeper);
+	static ObjectPoolThread<Payment> poolThread;
+	static {
+		poolThread = new ObjectPoolThread<Payment>("Thread-PP",PaymentController::timekeeper);
+		poolThread.start();
+	}
 	@PostMapping("/create")
 	Payment create (@RequestParam int buyerId,
 			@RequestParam int productId, 
@@ -38,7 +43,7 @@ public class PaymentController implements BasicGetController<Payment>
 		if (foundAcc != null && foundProd != null) {
 			Shipment createShip = new Shipment(shipmentAddress, 0, shipmentPlan, null);
 			Payment createPay = new Payment(buyerId, productId, productCount, createShip);
-			double price = createPay.getTotalPay(foundProd);
+			double price = createPay.getTotalPay(foundProd)*productCount;
 			double balance = foundAcc.balance;
 			if ((balance-price)>0) {
 				foundAcc.balance -= price;
@@ -94,10 +99,11 @@ public class PaymentController implements BasicGetController<Payment>
 			return false;
 		}
 	}
+	@GetMapping("/all")
 	public JsonTable<Payment> getJsonTable() {
 		return paymentTable;
 	}
-	//not yet done
+
 	public static boolean timekeeper (Payment payment) {
     	long time = payment.history.get(payment.history.size()-1).date.getTime();
     	if (payment.history.get(payment.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {
