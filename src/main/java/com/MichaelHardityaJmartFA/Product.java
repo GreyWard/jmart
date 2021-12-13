@@ -3,22 +3,12 @@ package com.MichaelHardityaJmartFA;
 import com.MichaelHardityaJmartFA.dbjson.Serializable;
 
 /**
- * Memuat data produk
+ * Keeps Product information
  *
  * @author Michael Harditya
  */
 public class Product extends Serializable
 {   
-    /**
-     * Menyimpan data produk
-     * @param storeId menyimpan id toko {@code Product}
-     * @param name menyimpan nama {@code Product}
-     * @param weight menyimpan berat {@code Product}
-     * @param conditionUsed menyimpan kondisi {@code Product} apakah bekas atau baru
-     * @param priceTag menyimpan harga {@code Product} pada class {@code priceTag}
-     * @param category menyimpan kategori {@code Product} pada class {@code ProductCategory}
-     * @param rating menyimpan rating {@code Product} pada class {@code ProductRating}
-     */
     public int accountId;
     public ProductCategory category;
     public boolean conditionUsed;
@@ -28,7 +18,15 @@ public class Product extends Serializable
     public byte shipmentPlans;
     public int weight;
     /**
-     * Menyimpan data produk
+     * Keeps Product information
+     * @param accountId the store ID that sells the product
+     * @param name the name of the product
+     * @param weight the weight of the product
+     * @param conditionUsed the condition of the product
+     * @param price the price of the product
+     * @param discount the discount that applied for the product
+     * @param category the category of the product
+     * @param shipmentPlans the delivery plan for the product
      */
     public Product(int accountId, String name, int weight, boolean conditionUsed, double price, double discount, ProductCategory category, byte shipmentPlans){
         this.accountId = accountId;

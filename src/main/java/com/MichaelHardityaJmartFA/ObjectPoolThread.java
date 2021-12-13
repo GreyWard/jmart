@@ -47,9 +47,12 @@ public class ObjectPoolThread<T> extends Thread {
 	 * Thread will stop after {@code exit()} is called
 	 */
 	public void run() {
+		try {
 		while (this.exitSignal == false) {
 			for (T iter : this.objectPool) {
-				while (this.routine.apply(iter) != true);
+				while (this.routine.apply(iter) != true) {
+					objectPool.wait();
+				}
 				if (routine.apply(iter) == true) {
 					objectPool.remove(iter);
 				}
@@ -66,6 +69,9 @@ public class ObjectPoolThread<T> extends Thread {
 					}
 				}
 			}
+		}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	/**

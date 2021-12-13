@@ -12,6 +12,7 @@ public class Payment extends Invoice
     public ArrayList<Record> history= new ArrayList<Record>();
     public Shipment shipment;
     public int productCount;
+    public String productName;
     /**
      * Records the Payment activities information
      * @param buyerId An Account ID of the purchaser
@@ -19,11 +20,12 @@ public class Payment extends Invoice
      * @param productCount Purchased product quantity
      * @param shipment shipment method of the product
      */
-    public Payment(int buyerId,int productId,int productCount, Shipment shipment)
+    public Payment(int buyerId,int productId,int productCount, Shipment shipment,String productName)
     {
         super(buyerId, productId);
         this.productCount = productCount;
         this.shipment = shipment;
+        this.productName = productName;
     }
     /**
      * Class to Record the date, message, and status of the purchase and status changes

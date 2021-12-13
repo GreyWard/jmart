@@ -2,10 +2,9 @@ package com.MichaelHardityaJmartFA;
 
 
 /**
- * Write a description of class Shipment here.
+ * To process Shipment information, from plan to date
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Michael Harditya
  */
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -23,7 +22,11 @@ public class Shipment
     public String receipt;
     public byte plan;
     /**
-     * Constructor for objects of class Shipment
+     * Initiate a new Shipment
+     * @param address destination address for the shipment
+     * @param cost cost needed for the shipment
+     * @param plan shipment plan
+     * @param receipt a receipt notes for the shipment delivery
      */
     public Shipment(String address, int cost, byte plan, String receipt)
     {
@@ -32,6 +35,11 @@ public class Shipment
         this.plan = plan;
         this.receipt = receipt;
     }
+    /**
+     * Checking the estimation arrival for the referenced date, based on the plan
+     * @param reference the referenced date
+     * @return Shipment formatted date
+     */
     public String getEstimatedArrival(Date reference){
         Calendar now = Calendar.getInstance();
         now.setTime(reference);
@@ -46,6 +54,11 @@ public class Shipment
         }
         return Shipment.ESTIMATION_FORMAT.format(now.getTime());
     }
+    /**
+     * Check if the referenced plan is the Shipment plan
+     * @param reference the referenced plan
+     * @return true if it is the same plan
+     */
     public boolean isDuration(Plan reference){
         if ((this.plan & reference.bit) == reference.bit){
             return true;
@@ -54,6 +67,12 @@ public class Shipment
             return false;
         }
     }
+    /**
+     * Check if the referenced plan is the Object plan
+     * @param object the Object plan in byte
+     * @param reference the referenced plan
+     * @return true if it is the same plan
+     */
     public static boolean isDuration(byte object, Plan reference){
         if ((object & reference.bit) == reference.bit){
             return true;
@@ -66,6 +85,11 @@ public class Shipment
     {
         return false;
     }
+    /**
+     * The Plan class, have a byte type data
+     * @author Michael Harditya
+     *
+     */
     public static class Plan
     {
     public final byte bit;

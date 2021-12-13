@@ -1,6 +1,8 @@
 package com.MichaelHardityaJmartFA.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,7 +46,7 @@ public class PaymentController implements BasicGetController<Payment>
 		Product foundProd = Algorithm.<Product>find(ProductController.productTable,pred -> pred.id == productId);
 		if (foundAcc != null && foundProd != null) {
 			Shipment createShip = new Shipment(shipmentAddress, 0, shipmentPlan, null);
-			Payment createPay = new Payment(buyerId, productId, productCount, createShip);
+			Payment createPay = new Payment(buyerId, productId, productCount, createShip,foundProd.name);
 			double price = createPay.getTotalPay(foundProd);
 			double balance = foundAcc.balance;
 			if ((balance-price)>0) {
@@ -78,11 +80,14 @@ public class PaymentController implements BasicGetController<Payment>
 	@PostMapping("/{id}/cancel")
 	boolean cancel(@PathVariable int id) {
 		Payment found = Algorithm.<Payment>find(paymentTable,prod -> prod.id == id);
+		Account foundAcc = Algorithm.<Account>find(AccountController.accountTable,prod -> prod.id == found.buyerId);
+		Product foundProd = Algorithm.<Product>find(ProductController.productTable,pred -> pred.id == found.productId);
 		poolThread.add(found);
 		if (found != null && found.history.get(found.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {
 			Payment.Record newer = found.new Record(Status.CANCELLED,"Pesanan dibatalkan");
 			found.status = Status.CANCELLED;
 			found.history.add(newer);
+			foundAcc.balance += found.getTotalPay(foundProd);
 			return true;
 		}else {
 			return false;
@@ -107,7 +112,40 @@ public class PaymentController implements BasicGetController<Payment>
 			return false;
 		}
 	}
-	@GetMapping("/all")
+	@GetMapping("/getPayment")
+	 List<Payment> getPayment(@RequestParam int buyerId,
+			 @RequestParam int page,
+			 @RequestParam int pageSize){
+		 try
+		 {
+			 List<Payment> filterId = null;
+			 filterId = Algorithm.<Payment>collect(paymentTable,prod -> prod.buyerId == buyerId);
+			 List<Payment> paginated = Algorithm.<Payment>paginate(filterId, page, pageSize, prod -> true);
+			 return paginated;
+		 }catch(Exception e){
+			 e.printStackTrace();
+			 return null;
+		 }
+	 }
+	@GetMapping("/getOrder")
+	 List<Payment> getOrder(@RequestParam int accountId,
+			 @RequestParam int page,
+			 @RequestParam int pageSize){
+		 try
+		 {
+			 List<Payment> filterId = new ArrayList<>();
+			 List<Product> soldItems = Algorithm.<Product>collect(ProductController.productTable,prod -> prod.accountId == accountId);
+			 for (Product iter : soldItems) {
+				 List<Payment> filterItem = Algorithm.<Payment>collect(paymentTable,prod -> prod.productId == iter.id);
+				 filterId.addAll(filterItem);
+			 }
+			 List<Payment> paginated = Algorithm.<Payment>paginate(filterId, page, pageSize, prod -> true);
+			 return paginated;
+		 }catch(Exception e){
+			 e.printStackTrace();
+			 return null;
+		 }
+	 }
 	public JsonTable<Payment> getJsonTable() {
 		return paymentTable;
 	}
