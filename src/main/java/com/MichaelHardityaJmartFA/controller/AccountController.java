@@ -17,7 +17,8 @@ import java.util.regex.Pattern;
 
 import org.springframework.web.bind.annotation.*;
 /**
- * Controls Account data types
+ * Connect Account management between front end and back end
+ * @see Account
  * @author Michael Harditya
  *
  */
@@ -31,10 +32,14 @@ public class AccountController implements BasicGetController<Account>
 	public static final Pattern REGEX_PATTERN_PASSWORD = Pattern.compile(REGEX_PASSWORD);
     @JsonAutowired(filepath = "a/b/account.json", value = Account.class) 
     public static JsonTable<Account> accountTable;
+    /**
+     * @deprecated used for backend testing
+     * @return a string "account page"
+     */
 	@GetMapping
 	String index() { return "account page"; }
 	/**
-	 * used to login from frontend
+	 * Login from front end
 	 * @param email user input email
 	 * @param password user input password
 	 * @return the account itself if succeed, null if failed
@@ -62,7 +67,7 @@ public class AccountController implements BasicGetController<Account>
 		}
 	}
 	/**
-	 * used to register new Account (next update, reject if the email is already exists)
+	 * Register a new Account (next update, reject if the email is already exists)
 	 * @param name user input name
 	 * @param email user input email, succeed when the email is in correct regex
 	 * @param password user input password, succeed when the password is in correct regex
@@ -104,7 +109,7 @@ public class AccountController implements BasicGetController<Account>
 		}
 	}
 	/**
-	 * used to register a Store in the Account, only if it doesn't have a Store yet
+	 * Register a Store in the Account, only if it doesn't have a Store yet
 	 * @param id user ID, generated automatically for every account
 	 * @param name username, taken from the user Account
 	 * @param address the address details from the user Account
@@ -129,7 +134,7 @@ public class AccountController implements BasicGetController<Account>
 		}
 	}
 	/**
-	 * used to add balance into the Account
+	 * Add balance into the Account
 	 * @param id user ID, generated automatically for every account
 	 * @param couponCode a string of coupon code
 	 * @return true if succeed, false if failed
@@ -145,6 +150,9 @@ public class AccountController implements BasicGetController<Account>
 			return null;
 		}
 	}
+	/**
+	 * Get account Json Table (for back-end testing) 
+	 */
 	public JsonTable<Account> getJsonTable() {
 		return accountTable;
 	}

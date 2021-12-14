@@ -4,7 +4,7 @@ import java.util.Date;
 import com.MichaelHardityaJmartFA.dbjson.Serializable;
 /**
  * Class to Record Payment and status of a purchase
- *
+ * 
  * @author Michael Harditya
  */
 public abstract class Invoice extends Serializable

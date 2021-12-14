@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 /**
  * Class to track Payment information of a purchase until recieved
+ * @see Invoice
+ * @see Record
+ * @see Shipment
  * @author Michael Harditya
  *
  */
@@ -26,6 +29,7 @@ public class Payment extends Invoice
         this.productCount = productCount;
         this.shipment = shipment;
         this.productName = productName;
+        this.status = history.get(history.size()-1).status;
     }
     /**
      * Class to Record the date, message, and status of the purchase and status changes

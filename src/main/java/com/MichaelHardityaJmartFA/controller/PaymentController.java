@@ -21,6 +21,12 @@ import com.MichaelHardityaJmartFA.Invoice.Status;
 import com.MichaelHardityaJmartFA.ObjectPoolThread;
 import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
+/**
+ * Connect Payment management between front end and back end
+ * @see Payment
+ * @author Michael Harditya
+ *
+ */
 @RestController
 @RequestMapping("/payment")
 public class PaymentController implements BasicGetController<Payment>
@@ -36,6 +42,15 @@ public class PaymentController implements BasicGetController<Payment>
 		poolThread = new ObjectPoolThread<Payment>("Thread-PP",PaymentController::timekeeper);
 		poolThread.start();
 	}
+	/**
+	 * Create new Payment from front-end, also decrease the buyer account balance based on the product price
+	 * @param buyerId Buyer identifier
+	 * @param productId Product identifier
+	 * @param productCount quantity of the product
+	 * @param shipmentAddress address for delivery
+	 * @param shipmentPlan plan of the delivery
+	 * @return Payment object if succeed, null if not
+	 */
 	@PostMapping("/create")
 	Payment create (@RequestParam int buyerId,
 			@RequestParam int productId, 
@@ -63,6 +78,12 @@ public class PaymentController implements BasicGetController<Payment>
 			return null;
 		}
 	}
+	/**
+	 * Accept method for a Payment object, changes it status to ON_PROGRESS only if the present status is WAITING_CONFIRMATION.
+	 * Only store managers can call this method.
+	 * @param id identifier of the payment object
+	 * @return true if it succeed, false if not
+	 */
 	@PostMapping("/{id}/accept")
 	boolean accept(@PathVariable int id)
 	{
@@ -77,12 +98,17 @@ public class PaymentController implements BasicGetController<Payment>
 			return false;
 		}
 	}
+	/**
+	 * Cancel method for Payment object, changes it status to CANCELLED only if the present status is WAITING_CONFIRMATION.
+	 * Both buyer and store manager can call this method.
+	 * @param id identifier for the payment object
+	 * @return true if succeed, false if not
+	 */
 	@PostMapping("/{id}/cancel")
 	boolean cancel(@PathVariable int id) {
 		Payment found = Algorithm.<Payment>find(paymentTable,prod -> prod.id == id);
 		Account foundAcc = Algorithm.<Account>find(AccountController.accountTable,prod -> prod.id == found.buyerId);
 		Product foundProd = Algorithm.<Product>find(ProductController.productTable,pred -> pred.id == found.productId);
-		poolThread.add(found);
 		if (found != null && found.history.get(found.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {
 			Payment.Record newer = found.new Record(Status.CANCELLED,"Pesanan dibatalkan");
 			found.status = Status.CANCELLED;
@@ -93,16 +119,23 @@ public class PaymentController implements BasicGetController<Payment>
 			return false;
 		}
 	}
+	/**
+	 * Submit method for a Payment object, changes it status to ON_DELIVERY only if the present status is ON_PROGRESS.
+	 * Only store managers can call this method.
+	 * @param id identifier for the Payment object
+	 * @param receipt receipt for buyer and courier, configured in the front-end and added the total payment of the product in here.
+	 * @return true if succeed, false if not
+	 */
 	@PostMapping("/{id}/submit")
 	boolean submit(@PathVariable int id, 
 				   @RequestParam String receipt) {
 		Payment found = Algorithm.<Payment>find(paymentTable,prod -> prod.id == id);
-		poolThread.add(found);
-		if (found != null && found.history.get(found.history.size()-1).status == Invoice.Status.ON_PROGRESS) {
+		Product checkProd = Algorithm.<Product>find(ProductController.productTable,pred -> pred.id == found.productId);
+		if (checkProd != null && found != null && found.history.get(found.history.size()-1).status == Invoice.Status.ON_PROGRESS) {
 			if (receipt.isBlank()) {
 				return false;
 			}else {
-				found.shipment.receipt = receipt;
+				found.shipment.receipt = receipt + "price=" + found.getTotalPay(checkProd) +"}";
 				Payment.Record newer = found.new Record(Status.ON_DELIVERY,"Pesanan dikirim");
 				found.history.add(newer);
 				found.status = Status.ON_DELIVERY;
@@ -112,6 +145,14 @@ public class PaymentController implements BasicGetController<Payment>
 			return false;
 		}
 	}
+	/**
+	 * 	/**
+	 * Get account invoices (a list of Payment object), used to populate Payment list for account in front-end
+	 * @param buyerId buyer account identifier
+	 * @param page page for {@code paginate}
+	 * @param pageSize page size for {@code paginate}
+	 * @return paginated list of Payment
+	 */
 	@GetMapping("/getPayment")
 	 List<Payment> getPayment(@RequestParam int buyerId,
 			 @RequestParam int page,
@@ -127,6 +168,13 @@ public class PaymentController implements BasicGetController<Payment>
 			 return null;
 		 }
 	 }
+	/**
+	 * Get store orders (a list of Payment object), used to populate and manage the Payment for the store in front-end
+	 * @param accountId identifier for the store owner
+	 * @param page page for {@code paginate}
+	 * @param pageSize page size for {@code paginate}
+	 * @return paginated list of Payment
+	 */
 	@GetMapping("/getOrder")
 	 List<Payment> getOrder(@RequestParam int accountId,
 			 @RequestParam int page,
@@ -146,10 +194,16 @@ public class PaymentController implements BasicGetController<Payment>
 			 return null;
 		 }
 	 }
+	/**
+	 * For back-end purpose, get payment Json Table
+	 */
 	public JsonTable<Payment> getJsonTable() {
 		return paymentTable;
 	}
-
+/**
+ * Updates the status overtime, if the maximum time has reached, the status will changed to Failed
+ * @param payment payment object that needs to be updated
+ */
 	public static boolean timekeeper (Payment payment) {
 		long now = new Date().getTime();
     	long time = now - payment.history.get(payment.history.size()-1).date.getTime();

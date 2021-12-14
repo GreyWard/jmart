@@ -3,6 +3,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
  * Keeps Store information for the Account
+ * @see Account
  * @author Michael Harditya
  *
  */

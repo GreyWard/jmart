@@ -1,5 +1,9 @@
 package com.MichaelHardityaJmartFA;
-
+/**
+ * A set of product categories
+ * @author Michael Harditya
+ *
+ */
 public enum ProductCategory
 {
 	ART_CRAFT,

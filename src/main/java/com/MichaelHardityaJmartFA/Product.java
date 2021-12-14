@@ -4,7 +4,9 @@ import com.MichaelHardityaJmartFA.dbjson.Serializable;
 
 /**
  * Keeps Product information
- *
+ * @see Serializable
+ * @see ProductCategory
+ * @see Shipment
  * @author Michael Harditya
  */
 public class Product extends Serializable

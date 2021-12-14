@@ -15,12 +15,29 @@ import com.MichaelHardityaJmartFA.ProductCategory;
 import com.MichaelHardityaJmartFA.Shipment;
 import com.MichaelHardityaJmartFA.dbjson.JsonAutowired;
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
-
+/**
+ * Connect Product management between front end and back end
+ * @see Product
+ * @author Michael Harditya
+ *
+ */
 @RestController
 @RequestMapping("/product")
 public class ProductController implements BasicGetController<Product> {
 	 @JsonAutowired(filepath = "a/b/product.json", value = Product.class)
 	 public static JsonTable<Product> productTable;
+	 /**
+	  * Create new Product to populate the product table
+	  * @param accountId identifier for the store owner
+	  * @param name name of the product
+	  * @param weight weight of the product
+	  * @param conditionUsed condition of the product
+	  * @param price price of the product
+	  * @param discount discount of the product
+	  * @param category category of the product in {@code ProductCategory}
+	  * @param shipmentPlans shipment plans for the product in String, converted to byte
+	  * @return the created product, null if failed
+	  */
 	 @PostMapping("/create")
 	 Product create
 	 (

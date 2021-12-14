@@ -8,7 +8,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.MichaelHardityaJmartFA.dbjson.JsonTable;
 import com.MichaelHardityaJmartFA.dbjson.Serializable;
-
+/**
+ * interface for Get method controllers, used to get id or page.
+ * @author Michael Harditya
+ *
+ * @param <T>
+ */
 public interface BasicGetController<T extends Serializable> {
  
 	@GetMapping("/{id}")
