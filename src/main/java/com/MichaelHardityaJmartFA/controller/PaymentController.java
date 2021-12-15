@@ -88,7 +88,6 @@ public class PaymentController implements BasicGetController<Payment>
 	boolean accept(@PathVariable int id)
 	{
 		Payment found = Algorithm.<Payment>find(paymentTable,prod -> prod.id == id);
-		poolThread.add(found);
 		if (found != null && found.history.get(found.history.size()-1).status == Invoice.Status.WAITING_CONFIRMATION) {
 			Payment.Record newer = found.new Record(Status.ON_PROGRESS,"Pesanan sedang dikerjakan");
 			found.status = Status.ON_PROGRESS;

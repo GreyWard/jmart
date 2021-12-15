@@ -109,7 +109,7 @@ public class ProductController implements BasicGetController<Product> {
 			 }
 			 List<Product> filterName = null;
 			 if(search != "") {
-				 filterName = Algorithm.<Product>collect(filterPrice,prod -> prod.name.contains(search));
+				 filterName = Algorithm.<Product>collect(filterPrice,prod -> prod.name.toLowerCase().contains(search.toLowerCase()));
 			 }else {
 				 filterName = Algorithm.<Product>collect(filterPrice, prod -> true);
 			 }

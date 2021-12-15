@@ -2,6 +2,8 @@ package com.MichaelHardityaJmartFA;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import com.MichaelHardityaJmartFA.Invoice.Status;
 /**
  * Class to track Payment information of a purchase until recieved
  * @see Invoice
@@ -29,7 +31,7 @@ public class Payment extends Invoice
         this.productCount = productCount;
         this.shipment = shipment;
         this.productName = productName;
-        this.status = history.get(history.size()-1).status;
+        this.status = Status.WAITING_CONFIRMATION;
     }
     /**
      * Class to Record the date, message, and status of the purchase and status changes
